@@ -27,26 +27,25 @@
         <h2>Produtos disponiveis</h2>
         <table style="border-style: solid">
             <tr>
-                <th>Categoria</th>
-                <th>Nome do Fabricante</th>
+                <th>Nome</th>
+                <th>Quantidade</th>
                 <th>Valor</th>
+                <th>Status</th>                
                 <th></th>
             </tr>
             
             <c:forEach items="${produtos}" var="p">
-            	<c:if test="${p.quantidade > 0 && p.status == '1'}">
+            	<c:if test="${p.quantidade > 0 && p.status == '0'}">                 
 	                <tr>
-	                    <td>${p.categoria}</td>
 	                    <td>${p.nome}</td>
+	                    <td>${p.quantidade}</td>                            
 	                    <td>${p.valor}</td>
+	                    <td>${p.status}</td>                            
 	                    <td><a href="Servlet?acao=detalhes&id=${p.id}">Detalhes</a> <a href="Servlet?acao=alterar_imagem&id=${p.id}">Alterar imagem</a></td>
-	                </tr>
+	                </tr>                       
                 </c:if>
-
             </c:forEach>            
-
         </table>      
-        
     </center>    
 </body>
 </html>

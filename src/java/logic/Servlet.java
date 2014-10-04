@@ -29,8 +29,8 @@ public class Servlet extends HttpServlet {
     private State state;
     private String url;
     private HttpSession session;
-    private String titulo = "Pastoreiro - Login";
-    private String nome_do_site = "Pastoreiro";
+    private String titulo = "Sistema de Vendas - Login";
+    private String nome_do_site = "Sistema de Vendas";
 
     private String nameOfLogger = Login.class.getName();
     private Logger myLogger = Logger.getLogger(nameOfLogger);
@@ -105,8 +105,7 @@ public class Servlet extends HttpServlet {
             url = state.url();
         }
         if(!"".equals(url)) {
-            //PrintWriter out = response.getWriter();  
-            //out.println("URL" + url); 
+            System.out.println("Servlet URL " + url + " " + state.url()); 
             RequestDispatcher dispatcher = request.getRequestDispatcher(url);
             dispatcher.forward(request, response);
         }

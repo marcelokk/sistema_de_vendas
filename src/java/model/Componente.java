@@ -5,12 +5,17 @@ public class Componente {
     private int id;
     private int quantidade;
     private double valor;
+    private int status;
     
-    public Componente(int id, String nome, int quantidade, double valor) {
+    public Componente() {   
+    }
+    
+    public Componente(int id, String nome, int quantidade, double valor, int status) {
         this.nome = nome;
         this.id = id;
         this.quantidade = quantidade;
         this.valor = valor;
+        this.status = status;
     }
     
     public String getNome() {
@@ -43,6 +48,14 @@ public class Componente {
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
     
 }

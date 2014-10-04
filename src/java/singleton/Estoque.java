@@ -36,10 +36,10 @@ public class Estoque {
         if (listaComponentes != null && listaComponentes.isEmpty()) {
             hSession = HibernateUtil.getSessionFactory().getCurrentSession();
             hSession.beginTransaction();
-            hSession.save(new Componente(1, "componente1", 10, 1.0));
-            hSession.save(new Componente(2, "componente2", 20, 1.5));
-            hSession.save(new Componente(3, "componente3", 25, 2.0));
-            hSession.save(new Componente(4, "componente4", 30, 1.0));
+            hSession.save(new Componente(1, "componente1", 10, 1.0, 1));
+            hSession.save(new Componente(2, "componente2", 20, 1.5, 1));
+            hSession.save(new Componente(3, "componente3", 25, 2.0, 1));
+            hSession.save(new Componente(4, "componente4", 30, 1.0, 1));
             hSession.getTransaction().commit();
         }
 
@@ -101,4 +101,15 @@ public class Estoque {
         return listaComponentes;
     }
     // metodos de banco de dados
+    
+    
+    public Usuario getUsuario(String login) {
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+        Usuario u = (Usuario) hSession.createQuery("from Usuario as " + 
+                "c where c.login=:login").setParameter("login", login).uniqueResult();
+        hSession.getTransaction().commit();
+        return u;
+    }
+    
 }

@@ -5,7 +5,7 @@ import javax.servlet.http.HttpSession;
 
 public class Home implements State {
     
-    private String url;
+    private String url = "home.jsp";
     private HttpSession session;
     private HttpServletRequest request;    
     

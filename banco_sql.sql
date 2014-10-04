@@ -1,10 +1,12 @@
-drop table Ingrediente;
+drop table Componente;
 drop table Usuario;
 
-create table Ingrediente (
+create table Componente (
     id integer,
     nome varchar,
-    int quantidade,
+    quantidade integer,
+    valor real,
+    status integer,
     PRIMARY KEY(id)
 );
 
@@ -20,11 +22,11 @@ create table Usuario (
     PRIMARY KEY(id)
 );
 
-insert into Ingrediente values(0, "carne", 10);
-insert into Ingrediente values(1, "arroz", 10);
-insert into Ingrediente values(2, "kim", 10);
-insert into Ingrediente values(3, "repolho", 10);
-insert into Ingrediente values(4, "ttok", 10);
+insert into Componente values(0, "componente0", 10, 1.0, 1);
+insert into Componente values(1, "componente1", 10, 2.0, 1);
+insert into Componente values(2, "componente2", 10, 1.5, 1);
+insert into Componente values(3, "componente3", 10, 2.5, 1);
+insert into Componente values(4, "componente4", 10, 1.7, 1);
 
-insert into Usuario values(0, "admin@a.com", "admin1!", 1, "Administrador", "Sao Carlos", "SP", "00-00000");
-insert into Usuario values(1, "user1@a.com", "user1!", 0, "Usuario1", "Sao Carlos", "SP", "00-00000");
+insert into Usuario values(0, "admin@a.com", "Admin1!", 1, "Administrador", "Sao Carlos", "SP", "00-00000");
+insert into Usuario values(1, "user1@a.com", "User1!", 0, "Usuario1", "Sao Carlos", "SP", "00-00000");
