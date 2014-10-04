@@ -14,38 +14,56 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Usuario;
 import org.hibernate.Session;
+import state.Cadastro;
+import state.Carrinho;
+import state.EditarDadosPessoais;
 import state.Home;
 import state.Login;
 import state.State;
 import util.HibernateUtil;
 
 // .sqlite my.db < arq.sql
-
 @WebServlet(name = "Servlet", urlPatterns = {"/Servlet"})
 public class Servlet extends HttpServlet {
 
+    // Estados
     private State home;
     private State login;
     private State state;
+    private State cadastro;
+    private State editarDadosPessoais;
+    private State carrinho;
+    
     private String url;
     private HttpSession session;
     private String titulo = "Sistema de Vendas - Login";
     private String nome_do_site = "Sistema de Vendas";
-
     private String nameOfLogger = Login.class.getName();
     private Logger myLogger = Logger.getLogger(nameOfLogger);
-    
+
     public void setState(State state) {
         this.state = state;
     }
-    
+
     public State getLoginState() {
         return login;
     }
-    
+
     public State getHomeState() {
         return home;
     }
+
+    public State getCadastroState() {
+        return cadastro;
+    }
+
+    public State getEditarDadosPessoaisState() {
+        return editarDadosPessoais;
+    }
+
+    public State getCarrinhoState() {
+        return carrinho;
+    }    
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -59,12 +77,15 @@ public class Servlet extends HttpServlet {
             // pagina da home
             if (acao.equals("login")) {
                 System.out.println("processRequest - login");
-                home = new Home();
+                home = new Home(this);
                 login = new Login(this);
+                cadastro = new Cadastro(this);
+                carrinho = new Carrinho(this);
+                editarDadosPessoais = new EditarDadosPessoais(this);
                 session.setAttribute("titulo", titulo);
                 session.setAttribute("nome_do_site", nome_do_site);
 
-                state = login;                
+                state = login;
                 url = "login.jsp";
             } // pagina de cadastro de novo usuario
             else if (acao.equals("cadastro")) {
@@ -75,12 +96,14 @@ public class Servlet extends HttpServlet {
                 state.setRequest(request);
                 state.deslogar();
                 url = state.url();
+            } else if(acao.equals("carrinho")) {
+                state.setRequest(request);
+                state.deslogar();
+                url = state.url();                
             }
 
             // .. resto dos elseifs
-
         }
-
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
     }
@@ -104,8 +127,8 @@ public class Servlet extends HttpServlet {
             state.logar((String) request.getParameter("login"), (String) request.getParameter("password"));
             url = state.url();
         }
-        if(!"".equals(url)) {
-            System.out.println("Servlet URL " + url + " " + state.url()); 
+        if (!"".equals(url)) {
+            System.out.println("Servlet URL " + url + " " + state.url());
             RequestDispatcher dispatcher = request.getRequestDispatcher(url);
             dispatcher.forward(request, response);
         }

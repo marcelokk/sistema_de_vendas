@@ -17,14 +17,14 @@
         <h1>Ola, ${currentUser.nome}</h1>
         
         <a href="Servlet?acao=carrinho">Carrinho de compras</a>
-        <a href="Servlet?acao=editar_dados_pessoais">Editar dados pessoais</a>
+        <a href="Servlet?acao=cadastro">Editar dados pessoais</a>
         
         <c:if test="${currentUser.administrador == 1}">
             <a href="Servlet?acao=estoque">Estoque</a>
             <a href="Servlet?acao=cadastrar_produtos">Cadastro de Produtos</a>
         </c:if>
         
-        <h2>Produtos disponiveis</h2>
+        <h2>Personalize seu Produto</h2>
         <table style="border-style: solid">
             <tr>
                 <th>Nome</th>
@@ -40,8 +40,8 @@
 	                    <td>${p.nome}</td>
 	                    <td>${p.quantidade}</td>                            
 	                    <td>${p.valor}</td>
-	                    <td>${p.status}</td>                            
-	                    <td><a href="Servlet?acao=detalhes&id=${p.id}">Detalhes</a> <a href="Servlet?acao=alterar_imagem&id=${p.id}">Alterar imagem</a></td>
+	                    <td>${p.status}</td>
+                            <td><input type="checkbox"></td>
 	                </tr>                       
                 </c:if>
             </c:forEach>            

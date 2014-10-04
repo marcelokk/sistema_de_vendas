@@ -2,16 +2,21 @@ package state;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import logic.Servlet;
 import model.Usuario;
-import org.hibernate.Session;
-import util.HibernateUtil;
+import singleton.Estoque;
 
 public class Cadastro implements State {
 
-    private String url;
+    private Servlet servlet;
+    private String url = "cadastro.jsp";
     private HttpSession session;
     private HttpServletRequest request;
 
+    public Cadastro(Servlet servlet) {
+        this.servlet = servlet;
+    }
+    
     @Override
     public void logar(String login, String senha) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -32,10 +37,7 @@ public class Cadastro implements State {
         Usuario u = (Usuario) session.getAttribute("currentUser");
 
         // ----- select -----
-        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
-        hSession.beginTransaction();
-        Usuario usuario = (Usuario) hSession.createQuery("from Usuario as " + "c where c.login=:login").setParameter("login", login).uniqueResult();
-        hSession.getTransaction().commit();
+        Usuario usuario = Estoque.getInstantance().getUsuario(login);
 
         // ----- checa se o usuario ja existe no banco de dados -----
         boolean existe = false;
@@ -55,11 +57,8 @@ public class Cadastro implements State {
             u.setEstado(request.getParameter("estado"));
 
             // ----- adiciona o usuario no banco de dados -----
-            hSession = HibernateUtil.getSessionFactory().getCurrentSession();
-            hSession.beginTransaction();
-            hSession.save(u);
-            hSession.getTransaction().commit();
-            url = "login.jsp";
+            Estoque.getInstantance().addUsuario(u);
+            servlet.setState(servlet.getLoginState());
         }
     }
 

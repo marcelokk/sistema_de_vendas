@@ -32,7 +32,7 @@ public class Login implements State {
 
         // trocar para a pagina de erro
         url = "login.jsp";
-        
+
         // ----- checa se o password esta correto -----
         if (u != null && u.getPassword().equals(password)) {
             session.setAttribute("currentUser", u);
@@ -53,7 +53,7 @@ public class Login implements State {
         //session.setAttribute("currentUser", "");
         request.setAttribute("mensagem", "Cadastro de Novo Usuario");
         request.setAttribute("voltar", "login.jsp");
-        url = "cadastro.jsp";
+        servlet.setState(servlet.getCadastroState());
     }
 
     // ****** Operacoes nao permitidas *****

@@ -101,15 +101,20 @@ public class Estoque {
         return listaComponentes;
     }
     // metodos de banco de dados
-    
-    
+
     public Usuario getUsuario(String login) {
         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
         hSession.beginTransaction();
-        Usuario u = (Usuario) hSession.createQuery("from Usuario as " + 
-                "c where c.login=:login").setParameter("login", login).uniqueResult();
+        Usuario u = (Usuario) hSession.createQuery("from Usuario as "
+                + "c where c.login=:login").setParameter("login", login).uniqueResult();
         hSession.getTransaction().commit();
         return u;
     }
-    
+
+    public void addUsuario(Usuario u) {
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();        
+        hSession.beginTransaction();
+        hSession.save(u);
+        hSession.getTransaction().commit();
+    }
 }
