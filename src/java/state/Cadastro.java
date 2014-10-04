@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import logic.Servlet;
 import model.Usuario;
-import singleton.Estoque;
+import singleton.Banco;
 
 public class Cadastro implements State {
 
@@ -16,7 +16,7 @@ public class Cadastro implements State {
     public Cadastro(Servlet servlet) {
         this.servlet = servlet;
     }
-    
+
     @Override
     public void logar(String login, String senha) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -33,11 +33,8 @@ public class Cadastro implements State {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        // ----- pega variaveis da sessao -----
-        Usuario u = (Usuario) session.getAttribute("currentUser");
-
         // ----- select -----
-        Usuario usuario = Estoque.getInstantance().getUsuario(login);
+        Usuario usuario = Banco.getInstantance().getUsuario(login);
 
         // ----- checa se o usuario ja existe no banco de dados -----
         boolean existe = false;
@@ -49,6 +46,7 @@ public class Cadastro implements State {
             request.setAttribute("voltar", "inicio.jsp");
             url = "nao_autorizado.jsp";
         } else {
+            Usuario u = new Usuario();
             u.setLogin(request.getParameter("login"));
             u.setPassword(request.getParameter("password"));
             u.setNome(request.getParameter("nome"));
@@ -57,7 +55,7 @@ public class Cadastro implements State {
             u.setEstado(request.getParameter("estado"));
 
             // ----- adiciona o usuario no banco de dados -----
-            Estoque.getInstantance().addUsuario(u);
+            Banco.getInstantance().addUsuario(u);
             servlet.setState(servlet.getLoginState());
         }
     }
@@ -106,5 +104,20 @@ public class Cadastro implements State {
     @Override
     public String url() {
         return url;
+    }
+
+    @Override
+    public void voltar() {
+        servlet.setState(servlet.getLoginState());
+    }
+
+    @Override
+    public void estoque() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void carrinho() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

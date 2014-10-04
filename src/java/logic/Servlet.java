@@ -1,26 +1,26 @@
 package logic;
 
+/*
+ * Cadastro no banco de dados nao vai
+ */
+
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Usuario;
-import org.hibernate.Session;
 import state.Cadastro;
+import state.CadastroProdutos;
 import state.Carrinho;
 import state.EditarDadosPessoais;
+import state.Estoque;
 import state.Home;
 import state.Login;
 import state.State;
-import util.HibernateUtil;
 
 // .sqlite my.db < arq.sql
 @WebServlet(name = "Servlet", urlPatterns = {"/Servlet"})
@@ -33,8 +33,13 @@ public class Servlet extends HttpServlet {
     private State cadastro;
     private State editarDadosPessoais;
     private State carrinho;
+    private State cadastrarProdutos;
+    private State estoque;
+    
     
     private String url;
+    
+    
     private HttpSession session;
     private String titulo = "Sistema de Vendas - Login";
     private String nome_do_site = "Sistema de Vendas";
@@ -63,7 +68,15 @@ public class Servlet extends HttpServlet {
 
     public State getCarrinhoState() {
         return carrinho;
-    }    
+    }
+
+    public State getCadastrarProdutos() {
+        return cadastrarProdutos;
+    }
+    
+    public State getEstoque() {
+        return estoque;
+    }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -82,6 +95,9 @@ public class Servlet extends HttpServlet {
                 cadastro = new Cadastro(this);
                 carrinho = new Carrinho(this);
                 editarDadosPessoais = new EditarDadosPessoais(this);
+                cadastrarProdutos = new CadastroProdutos(this);
+                estoque = new Estoque(this);
+                
                 session.setAttribute("titulo", titulo);
                 session.setAttribute("nome_do_site", nome_do_site);
 
@@ -96,12 +112,21 @@ public class Servlet extends HttpServlet {
                 state.setRequest(request);
                 state.deslogar();
                 url = state.url();
-            } else if(acao.equals("carrinho")) {
+            } else if (acao.equals("carrinho")) {
                 state.setRequest(request);
-                state.deslogar();
-                url = state.url();                
+                state.carrinho();
+                url = state.url();
+            } else if(acao.equals("cadastrar_produtos")) {
+                state.setRequest(request);
+                state.cadastrarProduto();
+                url = state.url();
             }
-
+            else if(acao.equals("estoque")) {
+                state.setRequest(request);
+                state.estoque();
+                url = state.url();
+            }
+            
             // .. resto dos elseifs
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
@@ -125,6 +150,15 @@ public class Servlet extends HttpServlet {
         if (acao.equals("logar")) {
             state.setRequest(request);
             state.logar((String) request.getParameter("login"), (String) request.getParameter("password"));
+            url = state.url();
+        } else if (acao.equals("voltar")) {
+            state.setRequest(request);
+            state.voltar();
+            url = state.url();
+        }
+        else if (acao.equals("cadastrar")) {
+            state.setRequest(request);
+            state.voltar();
             url = state.url();
         }
         if (!"".equals(url)) {

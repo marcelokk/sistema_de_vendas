@@ -18,7 +18,13 @@ public interface State {
     public void cadastrarProduto();
     public void descadastrarProduto();
     
+    public void estoque();
+    
     public void setRequest(HttpServletRequest request);
     
+    public void carrinho();
+    
     public String url();
+    
+    public void voltar();
 }

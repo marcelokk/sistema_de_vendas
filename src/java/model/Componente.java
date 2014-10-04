@@ -6,16 +6,18 @@ public class Componente {
     private int quantidade;
     private double valor;
     private int status;
+    private String descricao;
     
     public Componente() {   
     }
     
-    public Componente(int id, String nome, int quantidade, double valor, int status) {
+    public Componente(int id, String nome, int quantidade, double valor, int status, String descricao) {
         this.nome = nome;
         this.id = id;
         this.quantidade = quantidade;
         this.valor = valor;
         this.status = status;
+        this.descricao = descricao;
     }
     
     public String getNome() {
@@ -56,6 +58,14 @@ public class Componente {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
     
 }

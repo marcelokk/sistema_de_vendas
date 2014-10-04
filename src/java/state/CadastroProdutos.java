@@ -3,23 +3,36 @@ package state;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import logic.Servlet;
-import model.Componente;
 
-public class Home implements State {
+public class CadastroProdutos implements State {
 
     private Servlet servlet;
-    private String url = "home.jsp";
+    private String url = "cadastro_produtos.jsp";
     private HttpSession session;
-    private HttpServletRequest request;
-
-    public Home(Servlet servlet) {
+    private HttpServletRequest request;    
+    
+    public CadastroProdutos(Servlet servlet) {
         this.servlet = servlet;
     }
+    
+    @Override
+    public void logar(String login, String senha) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
-    // ****** Operacoes permitidas *****
     @Override
     public void deslogar() {
-        servlet.setState(servlet.getLoginState());
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void cadastro() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void descadastrarUsuario() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -44,21 +57,12 @@ public class Home implements State {
 
     @Override
     public void cadastrarProduto() {
-        Componente c = new Componente();
-        session.setAttribute("currentProduto", c);
-        request.setAttribute("mensagem", "Cadastrar Novo Produto");
-        servlet.setState(servlet.getCadastrarProdutos());
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void descadastrarProduto() {
         throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void cadastro() {
-        request.setAttribute("mensagem", "Editar Dados Pessoais");
-        servlet.setState(servlet.getEditarDadosPessoaisState());
     }
 
     @Override
@@ -72,29 +76,19 @@ public class Home implements State {
         return url;
     }
 
-    // ****** Operacoes nao permitidas *****    
-    @Override
-    public void logar(String login, String password) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void descadastrarUsuario() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     @Override
     public void voltar() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        servlet.setState(servlet.getHomeState());
     }
 
     @Override
     public void estoque() {
-        servlet.setState(servlet.getEstoque());        
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void carrinho() {
-        servlet.setState(servlet.getCarrinhoState());        
+        throw new UnsupportedOperationException("Not supported yet.");
     }
+    
 }

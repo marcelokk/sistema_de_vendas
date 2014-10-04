@@ -6,11 +6,11 @@ import model.Usuario;
 import org.hibernate.Session;
 import util.HibernateUtil;
 
-public class Estoque {
+public class Banco {
 
-    private static Estoque estoque;
+    private static Banco estoque;
 
-    private Estoque() {
+    private Banco() {
         // cria o banco de dados
         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
 
@@ -36,10 +36,10 @@ public class Estoque {
         if (listaComponentes != null && listaComponentes.isEmpty()) {
             hSession = HibernateUtil.getSessionFactory().getCurrentSession();
             hSession.beginTransaction();
-            hSession.save(new Componente(1, "componente1", 10, 1.0, 1));
-            hSession.save(new Componente(2, "componente2", 20, 1.5, 1));
-            hSession.save(new Componente(3, "componente3", 25, 2.0, 1));
-            hSession.save(new Componente(4, "componente4", 30, 1.0, 1));
+            hSession.save(new Componente(1, "componente1", 10, 1.0, 1, "descricao do componente 1"));
+            hSession.save(new Componente(2, "componente2", 20, 1.5, 1, "descricao do componente 2"));
+            hSession.save(new Componente(3, "componente3", 25, 2.0, 1, "descricao do componente 3"));
+            hSession.save(new Componente(4, "componente4", 30, 1.0, 1, "descricao do componente 4"));
             hSession.getTransaction().commit();
         }
 
@@ -52,9 +52,9 @@ public class Estoque {
          */
     }
 
-    public static Estoque getInstantance() {
+    public static Banco getInstantance() {
         if (estoque == null) {
-            estoque = new Estoque();
+            estoque = new Banco();
         }
         return estoque;
     }

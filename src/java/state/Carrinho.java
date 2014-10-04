@@ -67,7 +67,8 @@ public class Carrinho implements State {
 
     @Override
     public void setRequest(HttpServletRequest request) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.request = request;
+        this.session = request.getSession();
     }
 
     @Override
@@ -75,4 +76,18 @@ public class Carrinho implements State {
         return url;
     }
     
+    @Override
+    public void voltar() {
+        servlet.setState(servlet.getHomeState());
+    }    
+
+    @Override
+    public void estoque() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void carrinho() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

@@ -30,9 +30,8 @@
         </script>
     </head>
     <body>
-        <jsp:useBean id="currentProduto" type="model.Produto" scope="session"/>            
+        <jsp:useBean id="currentProduto" type="model.Componente" scope="session"/>            
         <jsp:useBean id="mensagem" type="String" scope="request"/>
-        <jsp:useBean id="voltar" type="String" scope="request"/>
         
     <center>
         <h1>${mensagem}</h1>
@@ -48,12 +47,7 @@
                 <td>Nome</td>
                 <td><input type="text" required="true" name="nome" value="${currentProduto.nome}"></td>
             </tr>
-            
-            <tr>
-                <td>Categoria</td>
-                <td><input type="text" required="true" name="categoria" value="${currentProduto.categoria}"></td>
-            </tr>
-            
+                        
             <tr>
                 <td>Quantidade em Estoque</td>
                 <td><input type="text" required="true" name="quantidade" value="${currentProduto.quantidade}"></td>
@@ -62,7 +56,7 @@
             <tr>
                 <td>Descricao Geral</td>
                 <td><input type="text" required="true" name="descricao" value="${currentProduto.descricao}"></td>
-            </tr>            
+            </tr>
             
             <tr>
                 <td>Valor</td>
@@ -82,7 +76,9 @@
             <input type="submit" value="salvar">
         </form>
                         
-            <a href="${voltar}">Voltar</a>
+        <form action="Servlet?acao=voltar" method="POST">
+            <input type="submit" name="voltar" value="voltar">
+        </form>
     </center>
     </body>
 </html>

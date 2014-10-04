@@ -94,7 +94,6 @@
     <body>
 
         <jsp:useBean id="mensagem" type="String" scope="request"/>
-        <jsp:useBean id="voltar" type="String" scope="request"/>
     <center>
         <h1>${mensagem}</h1>
 
@@ -168,7 +167,10 @@
             </table>
             <input type="submit" name="submit" value="Cadastrar">
         </form>
-        <a href="${voltar}">Voltar</a>
+
+        <form action="Servlet?acao=voltar" method="POST">
+            <input type="submit" name="voltar" value="voltar">
+        </form>
     </center> 
 </body>
 </html>
