@@ -23,6 +23,23 @@ create table Usuario (
     PRIMARY KEY(id)
 );
 
+create table Compra(
+    id integer,
+    usuario integer,
+    data_da_compra text not null,
+
+    PRIMARY KEY(id),
+    FOREIGN KEY(usuario) REFERENCES Usuario(id)
+);
+
+create table Item(
+    id integer,
+    descricao text not null,
+    valor real not null,
+    PRIMARY KEY(id),
+    FOREIGN KEY(id) REFERENCES Compra(id)
+);
+
 insert into Componente values(0, "componente0", 10, 1.0, 1, "descricao do componente 1");
 insert into Componente values(1, "componente1", 10, 2.0, 1, "descricao do componente 2");
 insert into Componente values(2, "componente2", 10, 1.5, 1, "descricao do componente 3");
@@ -31,3 +48,4 @@ insert into Componente values(4, "componente4", 10, 1.7, 1, "descricao do compon
 
 insert into Usuario values(0, "admin@a.com", "Admin1!", 1, "Administrador", "Sao Carlos", "SP", "00-00000");
 insert into Usuario values(1, "user1@a.com", "User1!", 0, "Usuario1", "Sao Carlos", "SP", "00-00000");
+

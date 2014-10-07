@@ -2,6 +2,7 @@ package singleton;
 
 import java.util.ArrayList;
 import model.Componente;
+import model.Compra;
 import model.Usuario;
 import org.hibernate.Session;
 import util.HibernateUtil;
@@ -117,4 +118,22 @@ public class Banco {
         hSession.save(u);
         hSession.getTransaction().commit();
     }
+    
+    public Compra getCompra(int id) {
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+        Compra c = (Compra) hSession.createQuery("from Compra as" 
+                + "c where c.id=:id").setParameter("id", id).uniqueResult();
+        hSession.getTransaction().commit();
+        return c;
+    }
+    
+    public Usuario getUsuario(int id) {
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+        Usuario u = (Usuario) hSession.createQuery("from Usuario as "
+                + "c where c.id=:id").setParameter("id", id).uniqueResult();
+        hSession.getTransaction().commit();
+        return u;
+    }    
 }
