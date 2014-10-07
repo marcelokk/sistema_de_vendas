@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import logic.Servlet;
+import control.Servlet;
 import model.Componente;
 import model.Usuario;
 import singleton.Banco;

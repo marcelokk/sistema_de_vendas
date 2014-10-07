@@ -2,7 +2,7 @@ package state;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import logic.Servlet;
+import control.Servlet;
 
 public class Estoque implements State {
 

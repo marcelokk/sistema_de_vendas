@@ -1,4 +1,4 @@
-package logic;
+package control;
 
 /*
  * Cadastro no banco de dados nao vai
