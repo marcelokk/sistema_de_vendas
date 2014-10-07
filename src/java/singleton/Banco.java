@@ -42,8 +42,8 @@ public class Banco {
             hSession.save(new Componente(3, "componente3", 25, 2.0, 1, "descricao do componente 3"));
             hSession.save(new Componente(4, "componente4", 30, 1.0, 1, "descricao do componente 4"));
             hSession.getTransaction().commit();
-        }
-
+        }     
+        
         /*
          hSession = HibernateUtil.getSessionFactory().getCurrentSession();
          hSession.beginTransaction();
