@@ -25,6 +25,8 @@
         </c:if>
 
         <h2>Personalize seu Produto</h2>
+        
+        <form method="POST" action="Servlet?acao=comprar">        
         <table style="border-style: solid">
             <tr>
                 <th>Nome</th>
@@ -33,7 +35,7 @@
                 <th>Status</th>                
                 <th></th>
             </tr>
-
+            
             <c:forEach items="${produtos}" var="p">
                 <c:if test="${p.quantidade > 0 && p.status == '0'}">                 
                     <tr>
@@ -41,13 +43,11 @@
                         <td>${p.quantidade}</td>                            
                         <td>${p.valor}</td>
                         <td>${p.status}</td>
-                        <td><input type="checkbox"></td>
+                        <td><input type="checkbox" name="checkbox${p.id}"></td>
                     </tr>                       
                 </c:if>
             </c:forEach>            
         </table>
-
-        <form method="POST" action="comprar">
             <input type="submit" value="comprar" name="submit">
         </form>
     </center>    

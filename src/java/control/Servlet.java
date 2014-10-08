@@ -161,6 +161,11 @@ public class Servlet extends HttpServlet {
             state.cadastro();
             url = state.url();
         }
+        else if(acao.equals("comprar")) {
+            state.setRequest(request);
+            state.inserirNoCarrinho();
+            url = state.url();
+        }
         if (!"".equals(url)) {
             System.out.println("Servlet URL " + url + " " + state.url());
             RequestDispatcher dispatcher = request.getRequestDispatcher(url);

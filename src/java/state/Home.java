@@ -3,7 +3,14 @@ package state;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import control.Servlet;
+import decorator.Base;
+import decorator.Componente1;
+import decorator.Componente2;
+import decorator.Componente3;
+import decorator.Produto;
+import java.util.ArrayList;
 import model.Componente;
+import singleton.Banco;
 
 public class Home implements State {
 
@@ -24,7 +31,27 @@ public class Home implements State {
 
     @Override
     public void inserirNoCarrinho() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Produto p = new Base();
+        ArrayList<Componente> lista = Banco.getInstantance().getListaComponentes();
+        for (int i = 0; i < lista.size(); i++) {
+            if (request.getParameter("checkbox0").compareTo("1") == 0) {
+
+                if (i == 1) {
+                    p = new Componente1(p);
+                } else if (i == 2) {
+                    p = new Componente2(p);
+                } else if (i == 3) {
+                    p = new Componente3(p);
+                }
+            }
+            
+            ArrayList<Produto> carrinho = (ArrayList) session.getAttribute("carrinho");
+            if(carrinho == null) {
+                carrinho = new ArrayList();
+            }
+            session.setAttribute("carrinho", carrinho);
+        }
+        servlet.setState(servlet.getHomeState());
     }
 
     @Override
@@ -90,11 +117,11 @@ public class Home implements State {
 
     @Override
     public void estoque() {
-        servlet.setState(servlet.getEstoque());        
+        servlet.setState(servlet.getEstoque());
     }
 
     @Override
     public void carrinho() {
-        servlet.setState(servlet.getCarrinhoState());        
+        servlet.setState(servlet.getCarrinhoState());
     }
 }
