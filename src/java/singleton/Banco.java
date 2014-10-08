@@ -42,8 +42,8 @@ public class Banco {
             hSession.save(new Componente(3, "componente3", 25, 2.0, 1, "descricao do componente 3"));
             hSession.save(new Componente(4, "componente4", 30, 1.0, 1, "descricao do componente 4"));
             hSession.getTransaction().commit();
-        }     
-        
+        }
+
         /*
          hSession = HibernateUtil.getSessionFactory().getCurrentSession();
          hSession.beginTransaction();
@@ -113,21 +113,21 @@ public class Banco {
     }
 
     public void addUsuario(Usuario u) {
-        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();        
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
         hSession.beginTransaction();
         hSession.save(u);
         hSession.getTransaction().commit();
     }
-    
+
     public Compra getCompra(int id) {
         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
         hSession.beginTransaction();
-        Compra c = (Compra) hSession.createQuery("from Compra as" 
+        Compra c = (Compra) hSession.createQuery("from Compra as"
                 + "c where c.id=:id").setParameter("id", id).uniqueResult();
         hSession.getTransaction().commit();
         return c;
     }
-    
+
     public Usuario getUsuario(int id) {
         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
         hSession.beginTransaction();
@@ -135,5 +135,20 @@ public class Banco {
                 + "c where c.id=:id").setParameter("id", id).uniqueResult();
         hSession.getTransaction().commit();
         return u;
-    }    
+    }
+
+    public void updateUsuario(Usuario u) {
+        // ----- muda os dados do banco de dados -----                
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+        Usuario u2 = (Usuario) hSession.load(Usuario.class, u.getId());
+
+        u2.setPassword(u.getPassword());
+        u2.setNome(u.getNome());
+        u2.setTelefone(u.getTelefone());
+        u2.setCidade(u.getCidade());
+        u2.setEstado(u.getEstado());
+
+        hSession.getTransaction().commit();
+    }
 }

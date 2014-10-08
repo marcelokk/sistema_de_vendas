@@ -158,7 +158,7 @@ public class Servlet extends HttpServlet {
         }
         else if (acao.equals("cadastrar")) {
             state.setRequest(request);
-            state.voltar();
+            state.cadastro();
             url = state.url();
         }
         if (!"".equals(url)) {

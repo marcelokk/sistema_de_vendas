@@ -35,6 +35,7 @@ public class Cadastro implements State {
 
         // ----- select -----
         Usuario usuario = Banco.getInstantance().getUsuario(login);
+            System.out.println("##### INSERIU O USUARIO #####");
 
         // ----- checa se o usuario ja existe no banco de dados -----
         boolean existe = false;
@@ -42,9 +43,7 @@ public class Cadastro implements State {
             existe = true;
         }
         if (existe) {
-            request.setAttribute("mensagem", "O e-mail selecionado já está em uso, por favor, tente outro");
-            request.setAttribute("voltar", "inicio.jsp");
-            url = "nao_autorizado.jsp";
+            servlet.setState(servlet.getLoginState());
         } else {
             Usuario u = new Usuario();
             u.setLogin(request.getParameter("login"));
@@ -54,6 +53,7 @@ public class Cadastro implements State {
             u.setCidade(request.getParameter("cidade"));
             u.setEstado(request.getParameter("estado"));
 
+            System.out.println("##### INSERIU O USUARIO #####");
             // ----- adiciona o usuario no banco de dados -----
             Banco.getInstantance().addUsuario(u);
             servlet.setState(servlet.getLoginState());

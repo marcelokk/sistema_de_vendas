@@ -1,10 +1,9 @@
 package state;
 
-import java.util.ArrayList;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import control.Servlet;
+import java.util.ArrayList;
 import model.Componente;
 import model.Usuario;
 import singleton.Banco;
@@ -15,8 +14,6 @@ public class Login implements State {
     private String url = "login.jsp";
     private HttpSession session;
     private HttpServletRequest request;
-    private String nameOfLogger = Login.class.getName();
-    private Logger myLogger = Logger.getLogger(nameOfLogger);
 
     public Login(Servlet servlet) {
         this.servlet = servlet;
@@ -27,7 +24,6 @@ public class Login implements State {
     public void logar(String login, String password) {
         // ----- procura no banco de dados pelo usuario -----
         Usuario u = Banco.getInstantance().getUsuario(login);
-        myLogger.info("Login: " + login + " password " + password);
 
         // trocar para a pagina de erro
         url = "login.jsp";
@@ -39,6 +35,12 @@ public class Login implements State {
             // ----- recupera a lista de produtos do banco de dados -----
             ArrayList<Componente> listaProdutos = Banco.getInstantance().getListaComponentes();
 
+            for(int i = 0; i < listaProdutos.size(); i++) {
+                System.out.println("status " + listaProdutos.get(i).getStatus());
+                
+                System.out.println("valor " + listaProdutos.get(i).getValor());
+            }
+            
             // ----- salva na sessao -----
             session.setAttribute("produtos", listaProdutos);
 
