@@ -34,7 +34,7 @@ public class Home implements State {
         Produto p = new Base();
         ArrayList<Componente> lista = Banco.getInstantance().getListaComponentes();
         for (int i = 0; i < lista.size(); i++) {
-            if (request.getParameter("checkbox0").compareTo("1") == 0) {
+            if (request.getParameter("checkbox" + i) != null) {
 
                 if (i == 1) {
                     p = new Componente1(p);
@@ -45,11 +45,12 @@ public class Home implements State {
                 }
             }
             
-            ArrayList<Produto> carrinho = (ArrayList) session.getAttribute("carrinho");
+            ArrayList<Produto> carrinho = (ArrayList) session.getAttribute("listaCompras");
             if(carrinho == null) {
                 carrinho = new ArrayList();
             }
-            session.setAttribute("carrinho", carrinho);
+            carrinho.add(p);
+            session.setAttribute("listaCompras", carrinho);
         }
         servlet.setState(servlet.getHomeState());
     }
@@ -122,6 +123,17 @@ public class Home implements State {
 
     @Override
     public void carrinho() {
+        ArrayList<Produto> lista = (ArrayList) session.getAttribute("listaCompras");
+        if(lista == null || lista.isEmpty()) {
+            session.setAttribute("aux", 0);
+        } else {
+            session.setAttribute("aux", 1);
+        }
+        Double total = 0.0;
+        //for(Produto p : lista) {
+        //    total += p.custo();
+       // }
+        session.setAttribute("valor", total.toString());        
         servlet.setState(servlet.getCarrinhoState());
     }
 }

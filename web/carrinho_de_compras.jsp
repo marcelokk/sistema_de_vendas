@@ -26,9 +26,9 @@
 
             <c:forEach items="${listaCompras}" var="p" varStatus="i">
                 <tr>
-                    <td>${p.produto.nome}</td> 
-                    <td>${p.quantidade}</td>                    
-                    <td>${p.produto.valor}</td>
+                    <td>${p.descricao()}</td> 
+                    <td>1</td>                    
+                    <td>${p.custo()}</td>
                     <td><a href="Servlet?acao=remover&index=${i.index}">remover</a></td>
                 </tr>
             </c:forEach>   

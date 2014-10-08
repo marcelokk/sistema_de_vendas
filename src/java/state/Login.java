@@ -3,6 +3,7 @@ package state;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import control.Servlet;
+import decorator.Produto;
 import java.util.ArrayList;
 import model.Componente;
 import model.Usuario;
@@ -44,6 +45,9 @@ public class Login implements State {
             // ----- salva na sessao -----
             session.setAttribute("produtos", listaProdutos);
 
+            ArrayList<Produto> lista = new ArrayList();
+            session.setAttribute("listaCompras", lista);
+            
             servlet.setState(servlet.getHomeState());
         }
         System.out.println("Login - logar url: " + url);
