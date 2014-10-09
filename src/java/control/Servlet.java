@@ -13,6 +13,7 @@ import state.Cadastro;
 import state.CadastroProdutos;
 import state.Carrinho;
 import state.EditarDadosPessoais;
+import state.EditarProduto;
 import state.Estoque;
 import state.Home;
 import state.Login;
@@ -31,6 +32,7 @@ public class Servlet extends HttpServlet {
     private State carrinho;
     private State cadastrarProdutos;
     private State estoque;
+    private State editarProduto;
     private String url;
     private HttpSession session;
     private String titulo = "Sistema de Vendas - Login";
@@ -70,6 +72,10 @@ public class Servlet extends HttpServlet {
         return estoque;
     }
 
+    public State getEditarProduto() {
+        return editarProduto;
+    }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -89,7 +95,8 @@ public class Servlet extends HttpServlet {
                 editarDadosPessoais = new EditarDadosPessoais(this);
                 cadastrarProdutos = new CadastroProdutos(this);
                 estoque = new Estoque(this);
-
+                editarProduto = new EditarProduto(this);
+                
                 session.setAttribute("titulo", titulo);
                 session.setAttribute("nome_do_site", nome_do_site);
 
@@ -127,6 +134,10 @@ public class Servlet extends HttpServlet {
             } else if (acao.equals("descadastrar_produto")) {
                 state.setRequest(request);
                 state.descadastrarProduto();
+                url = state.url();
+            } else if (acao.equals("alterar")) {
+                state.setRequest(request);
+                state.cadastrarProduto();
                 url = state.url();
             }
 

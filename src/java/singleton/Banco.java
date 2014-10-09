@@ -79,6 +79,15 @@ public class Banco {
         return c.getValor();
     }
 
+    public Componente getComponente(int id) {
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+        Componente c = (Componente) hSession.createQuery("from Componente as "
+                + "c where c.id=:id").setParameter("id", id).uniqueResult();
+        hSession.getTransaction().commit();
+        return c;
+    }
+
     public void setQuantidadeComponente(int id_do_componente, int quantidade) {
         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
         hSession.beginTransaction();
@@ -164,6 +173,21 @@ public class Banco {
         u2.setTelefone(u.getTelefone());
         u2.setCidade(u.getCidade());
         u2.setEstado(u.getEstado());
+
+        hSession.getTransaction().commit();
+    }
+
+    public void updateComponente(Componente c) {
+        // ----- muda os dados do banco de dados -----                
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+        Componente c2 = (Componente) hSession.load(Componente.class, c.getId());
+
+        c2.setDescricao(c.getDescricao());
+        c2.setNome(c.getNome());
+        c2.setQuantidade(c.getQuantidade());
+        c2.setStatus(c.getStatus());
+        c2.setValor(c.getValor());
 
         hSession.getTransaction().commit();
     }

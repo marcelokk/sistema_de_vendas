@@ -1,19 +1,21 @@
 package state;
 
+import control.Servlet;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import control.Servlet;
 import model.Componente;
+import model.Usuario;
 import singleton.Banco;
 
-public class Estoque implements State {
+public class EditarProduto implements State {
 
     private Servlet servlet;
-    private String url = "estoque.jsp";
+    private String url = "cadastro_produtos.jsp";
     private HttpSession session;
     private HttpServletRequest request;
 
-    public Estoque(Servlet servlet) {
+    public EditarProduto(Servlet servlet) {
         this.servlet = servlet;
     }
 
@@ -59,10 +61,33 @@ public class Estoque implements State {
 
     @Override
     public void cadastrarProduto() {
-        Componente c = Banco.getInstantance().getComponente(Integer.parseInt(request.getParameter("id")));
-        session.setAttribute("currentProduto", c);
-        request.setAttribute("mensagem", "Edicao do Produto");
-        servlet.setState(servlet.getEditarProduto());
+
+        // ----- select -----
+        Componente c = (Componente) request.getAttribute("currentProduto");
+
+        // ----- checa se o usuario ja existe no banco de dados -----
+        boolean existe = false;
+        if (c != null) {
+            existe = true;
+        }
+        if (existe) {
+
+            c.setDescricao(request.getParameter("descricao"));
+            c.setNome(request.getParameter("nome"));
+            c.setQuantidade(Integer.parseInt(request.getParameter("quantidade")));
+            c.setStatus(Integer.parseInt(request.getParameter("status")));
+            c.setValor(Double.parseDouble(request.getParameter("valor")));
+
+            Banco.getInstantance().updateComponente(c);
+
+            // ----- recupera a lista de produtos do banco de dados -----
+            ArrayList<Componente> listaProdutos = Banco.getInstantance().getListaComponentes();
+            // ----- salva na sessao -----
+            session.setAttribute("produtos", listaProdutos);
+        } else {
+            // erro aqui
+        }
+        servlet.setState(servlet.getEstoque());
     }
 
     @Override
@@ -82,17 +107,17 @@ public class Estoque implements State {
     }
 
     @Override
+    public void carrinho() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
     public String url() {
         return url;
     }
 
     @Override
     public void voltar() {
-        servlet.setState(servlet.getHomeState());
-    }
-
-    @Override
-    public void carrinho() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        servlet.setState(servlet.getEstoque());
     }
 }
