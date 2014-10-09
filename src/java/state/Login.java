@@ -36,18 +36,18 @@ public class Login implements State {
             // ----- recupera a lista de produtos do banco de dados -----
             ArrayList<Componente> listaProdutos = Banco.getInstantance().getListaComponentes();
 
-            for(int i = 0; i < listaProdutos.size(); i++) {
+            for (int i = 0; i < listaProdutos.size(); i++) {
                 System.out.println("status " + listaProdutos.get(i).getStatus());
-                
+
                 System.out.println("valor " + listaProdutos.get(i).getValor());
             }
-            
+
             // ----- salva na sessao -----
             session.setAttribute("produtos", listaProdutos);
 
             ArrayList<Produto> lista = new ArrayList();
             session.setAttribute("listaCompras", lista);
-            
+
             servlet.setState(servlet.getHomeState());
         }
         System.out.println("Login - logar url: " + url);
@@ -57,6 +57,10 @@ public class Login implements State {
     public void cadastro() {
         //session.setAttribute("currentUser", "");
         request.setAttribute("mensagem", "Cadastro de Novo Usuario");
+        request.setAttribute("disabled", "false");
+        request.setAttribute("botao", "Cadastrar");        
+        Usuario u = new Usuario();
+        session.setAttribute("currentUser", u);
         servlet.setState(servlet.getCadastroState());
     }
 
@@ -112,11 +116,11 @@ public class Login implements State {
         System.out.println("URL " + url);
         return url;
     }
-    
+
     @Override
     public void voltar() {
         throw new UnsupportedOperationException("Not supported yet.");
-    }    
+    }
 
     @Override
     public void estoque() {

@@ -38,7 +38,7 @@ public class EditarDadosPessoais implements State {
         // ----- select -----
         Usuario usuario = Banco.getInstantance().getUsuario(login);
         
-        System.out.println("##### EDITANDO DADOS #####");
+        System.out.println("##### EDITANDO DADOS ##### " + login);
         
         // ----- checa se o usuario ja existe no banco de dados -----
         boolean existe = false;
@@ -56,6 +56,7 @@ public class EditarDadosPessoais implements State {
             usuario.setCidade(request.getParameter("cidade"));
             usuario.setEstado(request.getParameter("estado"));
             Banco.getInstantance().updateUsuario(usuario);
+            session.setAttribute("currentUser", usuario);
         } else {
             // erro aqui
             servlet.setState(servlet.getHomeState());

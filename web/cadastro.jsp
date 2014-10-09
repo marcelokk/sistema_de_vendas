@@ -151,7 +151,7 @@
 
                 <tr>
                     <td>Login:</td>
-                    <td><input type="text" name="login" placeholder="seu email aqui" required="true" value="${currentUser.login}"></td>
+                    <td><input type="text" name="login" placeholder="seu email aqui" required="true" value="${currentUser.login}" readonly="${disabled}"></td>
                 </tr>
 
                 <tr>
@@ -165,7 +165,7 @@
                 </tr>
 
             </table>
-            <input type="submit" name="submit" value="Cadastrar">
+            <input type="submit" name="submit" value="${botao}">
         </form>
 
         <form action="Servlet?acao=voltar" method="POST">

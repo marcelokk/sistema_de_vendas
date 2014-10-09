@@ -48,7 +48,7 @@
                 </c:if>
             </c:forEach>            
         </table>
-            <input type="submit" value="comprar" name="submit">
+            <input type="submit" value="Adicionar no Carrinho" name="submit">
         </form>
     </center>    
 </body>
