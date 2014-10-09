@@ -40,9 +40,8 @@
             </c:forEach>               
         </table>
 
-        <form action="Servlet?acao=voltar" method="POST">
-            <input type="submit" name="voltar" value="voltar">
-        </form>
+        <a href="Servlet?acao=voltar">voltar</a>         
+
     </center>
 </body>
 </html>

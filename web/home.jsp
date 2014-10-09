@@ -25,29 +25,37 @@
         </c:if>
 
         <h2>Personalize seu Produto</h2>
-        
+
         <form method="POST" action="Servlet?acao=comprar">        
-        <table style="border-style: solid">
-            <tr>
-                <th>Nome</th>
-                <th>Quantidade</th>
-                <th>Valor</th>
-                <th>Status</th>                
-                <th></th>
-            </tr>
-            
-            <c:forEach items="${produtos}" var="p">
-                <c:if test="${p.quantidade > 0 && p.status == '0'}">                 
-                    <tr>
-                        <td>${p.nome}</td>
-                        <td>${p.quantidade}</td>                            
-                        <td>${p.valor}</td>
-                        <td>${p.status}</td>
-                        <td><input type="checkbox" name="checkbox${p.id}"></td>
-                    </tr>                       
-                </c:if>
-            </c:forEach>            
-        </table>
+            <table style="border-style: solid">
+                <tr>
+                    <th>Nome</th>
+                    <th>Quantidade</th>
+                    <th>Valor</th>
+                    <th>Status</th>                
+                    <th></th>
+                    <c:if test="${currentUser.administrador == 1}">
+                        <td>Remover Produto</td>
+                    </c:if>                
+                </tr>
+
+                <c:forEach items="${produtos}" var="p" varStatus="i">
+                    <c:if test="${p.quantidade > 0 && p.status == '0'}">                 
+                        <tr>
+                            <td>${p.nome}</td>
+                            <td>${p.quantidade}</td>                            
+                            <td>${p.valor}</td>
+                            <td>${p.status}</td>
+                            <td><input type="checkbox" name="checkbox${p.id}"></td>
+                                <c:if test="${currentUser.administrador == 1}">
+                                <td>
+                                    <a href="Servlet?acao=descadastrar_produto&index=${p.id}">remover</a>
+                                </td>
+                            </c:if>
+                        </tr>                       
+                    </c:if>
+                </c:forEach>            
+            </table>
             <input type="submit" value="Adicionar no Carrinho" name="submit">
         </form>
     </center>    

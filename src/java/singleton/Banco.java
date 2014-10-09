@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import model.Componente;
 import model.Compra;
 import model.Usuario;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import util.HibernateUtil;
 
@@ -116,6 +117,21 @@ public class Banco {
         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
         hSession.beginTransaction();
         hSession.save(u);
+        hSession.getTransaction().commit();
+    }
+
+    public void addComponente(Componente c) {
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+        hSession.save(c);
+        hSession.getTransaction().commit();
+    }
+
+    public void removeComponente(int index) {
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+        Query q = hSession.createQuery("delete from Componente as x where x.id=:id").setParameter("id", index);
+        q.executeUpdate();
         hSession.getTransaction().commit();
     }
 

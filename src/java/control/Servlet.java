@@ -1,9 +1,5 @@
 package control;
 
-/*
- * Cadastro no banco de dados nao vai
- */
-
 import java.io.IOException;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -35,11 +31,7 @@ public class Servlet extends HttpServlet {
     private State carrinho;
     private State cadastrarProdutos;
     private State estoque;
-    
-    
     private String url;
-    
-    
     private HttpSession session;
     private String titulo = "Sistema de Vendas - Login";
     private String nome_do_site = "Sistema de Vendas";
@@ -73,11 +65,11 @@ public class Servlet extends HttpServlet {
     public State getCadastrarProdutos() {
         return cadastrarProdutos;
     }
-    
+
     public State getEstoque() {
         return estoque;
     }
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -97,7 +89,7 @@ public class Servlet extends HttpServlet {
                 editarDadosPessoais = new EditarDadosPessoais(this);
                 cadastrarProdutos = new CadastroProdutos(this);
                 estoque = new Estoque(this);
-                
+
                 session.setAttribute("titulo", titulo);
                 session.setAttribute("nome_do_site", nome_do_site);
 
@@ -108,6 +100,10 @@ public class Servlet extends HttpServlet {
                 state.setRequest(request);
                 state.cadastro();
                 url = state.url();
+            } else if (acao.equals("voltar")) {
+                state.setRequest(request);
+                state.voltar();
+                url = state.url();
             } else if (acao.equals("deslogar")) {
                 state.setRequest(request);
                 state.deslogar();
@@ -116,17 +112,24 @@ public class Servlet extends HttpServlet {
                 state.setRequest(request);
                 state.carrinho();
                 url = state.url();
-            } else if(acao.equals("cadastrar_produtos")) {
+            } else if (acao.equals("cadastrar_produtos")) {
                 state.setRequest(request);
                 state.cadastrarProduto();
                 url = state.url();
-            }
-            else if(acao.equals("estoque")) {
+            } else if (acao.equals("estoque")) {
                 state.setRequest(request);
                 state.estoque();
                 url = state.url();
+            } else if (acao.equals("remover")) {
+                state.setRequest(request);
+                state.removerDoCarrinho();
+                url = state.url();
+            } else if (acao.equals("descadastrar_produto")) {
+                state.setRequest(request);
+                state.descadastrarProduto();
+                url = state.url();
             }
-            
+
             // .. resto dos elseifs
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
@@ -151,25 +154,18 @@ public class Servlet extends HttpServlet {
             state.setRequest(request);
             state.logar((String) request.getParameter("login"), (String) request.getParameter("password"));
             url = state.url();
-        } else if (acao.equals("voltar")) {
-            state.setRequest(request);
-            state.voltar();
-            url = state.url();
-        }
-        else if (acao.equals("cadastrar")) {
+        } else if (acao.equals("cadastrar")) {
             state.setRequest(request);
             state.cadastro();
             url = state.url();
-        }
-        else if(acao.equals("comprar")) {
+        } else if (acao.equals("comprar")) {
             state.setRequest(request);
             state.inserirNoCarrinho();
             url = state.url();
-        }
-        else if(acao.equals("remover")) {
+        } else if (acao.equals("cadastrar_produtos")) {
             state.setRequest(request);
-            state.removerDoCarrinho();
-            url = state.url();        
+            state.cadastrarProduto();
+            url = state.url();
         }
         if (!"".equals(url)) {
             System.out.println("Servlet URL " + url + " " + state.url());

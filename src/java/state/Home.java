@@ -44,9 +44,9 @@ public class Home implements State {
                     p = new Componente3(p);
                 }
             }
-            
+
             ArrayList<Produto> carrinho = (ArrayList) session.getAttribute("listaCompras");
-            if(carrinho == null) {
+            if (carrinho == null) {
                 carrinho = new ArrayList();
             }
             carrinho.add(p);
@@ -80,14 +80,20 @@ public class Home implements State {
 
     @Override
     public void descadastrarProduto() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int i = Integer.parseInt(request.getParameter("index"));
+        Banco.getInstantance().removeComponente(i);
+        // ----- recupera a lista de produtos do banco de dados -----
+        ArrayList<Componente> listaProdutos = Banco.getInstantance().getListaComponentes();
+        // ----- salva na sessao -----
+        session.setAttribute("produtos", listaProdutos);
+        servlet.setState(servlet.getHomeState());          
     }
 
     @Override
     public void cadastro() {
         request.setAttribute("mensagem", "Editar Dados Pessoais");
         request.setAttribute("disabled", "true");
-        request.setAttribute("botao", "Atualizar");        
+        request.setAttribute("botao", "Atualizar");
         servlet.setState(servlet.getEditarDadosPessoaisState());
     }
 
@@ -109,8 +115,8 @@ public class Home implements State {
     }
 
     @Override
-    public void descadastrarUsuario() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void descadastrarUsuario() {   
+        throw new UnsupportedOperationException("Not supported yet.");        
     }
 
     @Override
@@ -126,16 +132,16 @@ public class Home implements State {
     @Override
     public void carrinho() {
         ArrayList<Produto> lista = (ArrayList) session.getAttribute("listaCompras");
-        if(lista == null || lista.isEmpty()) {
+        if (lista == null || lista.isEmpty()) {
             session.setAttribute("aux", 0);
         } else {
             session.setAttribute("aux", 1);
         }
         Double total = 0.0;
-        for(Produto p : lista) {
+        for (Produto p : lista) {
             total += p.custo();
         }
-        session.setAttribute("valor", total.toString());        
+        session.setAttribute("valor", total.toString());
         servlet.setState(servlet.getCarrinhoState());
     }
 }

@@ -30,9 +30,7 @@
                     <td>1</td>
                     <td>${p.custo()}</td>
                     <td>
-                        <form action="Servlet?acao=remover&index=${i.index}" method="POST">
-                            <input type="submit" name="submit" value="remover">    
-                        </form>
+                        <a href="Servlet?acao=remover&index=${i.index}">remover</a>
                     </td>
                 </tr>
             </c:forEach>   
@@ -46,9 +44,7 @@
             </form>
         </c:if>
 
-        <form action="Servlet?acao=voltar" method="POST">
-            <input type="submit" name="submit" value="Voltar e Continuar Comprando">
-        </form>  
+        <a href="Servlet?acao=voltar">Voltar e Continuar Comprando</a>         
 
     </center>
 </body>

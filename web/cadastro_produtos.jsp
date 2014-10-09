@@ -32,53 +32,47 @@
     <body>
         <jsp:useBean id="currentProduto" type="model.Componente" scope="session"/>            
         <jsp:useBean id="mensagem" type="String" scope="request"/>
-        
+
     <center>
         <h1>${mensagem}</h1>
-        
+
         <form method="POST" action="Servlet?acao=cadastrar_produtos"  onsubmit="return valida(this);">
-        <table border="1">
-            <tr>
-                <td>ID</td>
-                <td><input type="text" disabled="true" value="${currentProduto.id}" name="id"></td>
-            </tr>
-            
-            <tr>
-                <td>Nome</td>
-                <td><input type="text" required="true" name="nome" value="${currentProduto.nome}"></td>
-            </tr>
-                        
-            <tr>
-                <td>Quantidade em Estoque</td>
-                <td><input type="text" required="true" name="quantidade" value="${currentProduto.quantidade}"></td>
-            </tr>
-            
-            <tr>
-                <td>Descricao Geral</td>
-                <td><input type="text" required="true" name="descricao" value="${currentProduto.descricao}"></td>
-            </tr>
-            
-            <tr>
-                <td>Valor</td>
-                <td><input type="text" required="true" name="valor" value="${currentProduto.valor}"></td>
-            </tr>         
-            
-            <tr>
-                <td>Status</td>
-                <td>
-                    <select name="status">
+            <table border="1">            
+                <tr>
+                    <td>Nome</td>
+                    <td><input type="text" required="true" name="nome" value="${currentProduto.nome}"></td>
+                </tr>
+
+                <tr>
+                    <td>Quantidade em Estoque</td>
+                    <td><input type="text" required="true" name="quantidade" value="${currentProduto.quantidade}"></td>
+                </tr>
+
+                <tr>
+                    <td>Descricao Geral</td>
+                    <td><input type="text" required="true" name="descricao" value="${currentProduto.descricao}"></td>
+                </tr>
+
+                <tr>
+                    <td>Valor</td>
+                    <td><input type="text" required="true" name="valor" value="${currentProduto.valor}"></td>
+                </tr>         
+
+                <tr>
+                    <td>Status</td>
+                    <td>
+                        <select name="status">
                             <option value="1" label="Disponivel" ${currentProduto.status == "1" ? 'selected="true"' : '' }>Disponível</option>
                             <option value="0" label="Finalizado" ${currentProduto.status == "0" ? 'selected="true"' : '' }>Finalizado</option>                                
-                    </select>
-                </td>
-            </tr>            
-        </table>
+                        </select>
+                    </td>
+                </tr>            
+            </table>
             <input type="submit" value="salvar">
         </form>
-                        
-        <form action="Servlet?acao=voltar" method="POST">
-            <input type="submit" name="voltar" value="voltar">
-        </form>
+
+        <a href="Servlet?acao=voltar">voltar</a>         
+
     </center>
-    </body>
+</body>
 </html>
