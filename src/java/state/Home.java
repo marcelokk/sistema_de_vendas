@@ -130,9 +130,9 @@ public class Home implements State {
             session.setAttribute("aux", 1);
         }
         Double total = 0.0;
-        //for(Produto p : lista) {
-        //    total += p.custo();
-       // }
+        for(Produto p : lista) {
+            total += p.custo();
+        }
         session.setAttribute("valor", total.toString());        
         servlet.setState(servlet.getCarrinhoState());
     }

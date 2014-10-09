@@ -3,6 +3,8 @@ package state;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import control.Servlet;
+import decorator.Produto;
+import java.util.ArrayList;
 
 public class Carrinho implements State {
 
@@ -42,7 +44,25 @@ public class Carrinho implements State {
 
     @Override
     public void removerDoCarrinho() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int i = Integer.parseInt(request.getParameter("index"));
+        
+        ArrayList<Produto> lista = (ArrayList) session.getAttribute("listaCompras");
+        
+        lista.remove(i);
+        
+        session.setAttribute("listaCompras", lista);  
+        
+        if(lista == null || lista.isEmpty()) {
+            session.setAttribute("aux", 0);
+        } else {
+            session.setAttribute("aux", 1);
+        }
+        Double total = 0.0;
+        for(Produto p : lista) {
+            total += p.custo();
+        }
+        session.setAttribute("valor", total.toString());               
+        servlet.setState(servlet.getCarrinhoState());
     }
 
     @Override
@@ -88,6 +108,6 @@ public class Carrinho implements State {
 
     @Override
     public void carrinho() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported yet.");        
     }
 }

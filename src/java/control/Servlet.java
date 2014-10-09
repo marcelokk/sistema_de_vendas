@@ -166,6 +166,11 @@ public class Servlet extends HttpServlet {
             state.inserirNoCarrinho();
             url = state.url();
         }
+        else if(acao.equals("remover")) {
+            state.setRequest(request);
+            state.removerDoCarrinho();
+            url = state.url();        
+        }
         if (!"".equals(url)) {
             System.out.println("Servlet URL " + url + " " + state.url());
             RequestDispatcher dispatcher = request.getRequestDispatcher(url);

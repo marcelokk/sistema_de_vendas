@@ -12,7 +12,7 @@
         <jsp:useBean id="valor" type="String" scope="session"/>       
         <jsp:useBean id="listaCompras" type="java.util.List" scope="session"/>   
         <jsp:useBean id="aux" type="Integer" scope="session"/>
-        
+
     <center>
         <h1>Seu Carrinho de Compras</h1>
 
@@ -27,9 +27,13 @@
             <c:forEach items="${listaCompras}" var="p" varStatus="i">
                 <tr>
                     <td>${p.descricao()}</td> 
-                    <td>1</td>                    
+                    <td>1</td>
                     <td>${p.custo()}</td>
-                    <td><a href="Servlet?acao=remover&index=${i.index}">remover</a></td>
+                    <td>
+                        <form action="Servlet?acao=remover&index=${i.index}" method="POST">
+                            <input type="submit" name="submit" value="remover">    
+                        </form>
+                    </td>
                 </tr>
             </c:forEach>   
 
@@ -37,10 +41,15 @@
 
         <p>Valor Total a ser pago: ${valor}</p>
         <c:if test="${aux == 1}">
-          <p><a href="Servlet?acao=compra_finalizada">Efetuar Compra</a></p>  
+            <form action="Servlet?acao=compra_finalizada" method="POST">
+                <input type="submit" value="Efetuar Compra">
+            </form>
         </c:if>
-        
-        <p><a href="home.jsp">Voltar e Continuar Comprando</a></p>
+
+        <form action="Servlet?acao=voltar" method="POST">
+            <input type="submit" name="submit" value="Voltar e Continuar Comprando">
+        </form>  
+
     </center>
 </body>
 </html>
