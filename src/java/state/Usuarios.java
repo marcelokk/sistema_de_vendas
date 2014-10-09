@@ -1,22 +1,24 @@
 package state;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import control.Servlet;
 import decorator.Produto;
 import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import model.Usuario;
+import singleton.Banco;
 
-public class Carrinho implements State {
+public class Usuarios implements State {
 
     private Servlet servlet;
-    private String url = "carrinho_de_compras.jsp";
+    private String url = "usuarios.jsp";
     private HttpSession session;
     private HttpServletRequest request;
 
-    public Carrinho(Servlet servlet) {
+    public Usuarios(Servlet servlet) {
         this.servlet = servlet;
-    }    
-    
+    }
+
     @Override
     public void logar(String login, String senha) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -34,7 +36,13 @@ public class Carrinho implements State {
 
     @Override
     public void descadastrarUsuario() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int i = Integer.parseInt(request.getParameter("index"));
+
+        Banco.getInstantance().removeUsuario(i);
+        
+        ArrayList<Usuario> lista = Banco.getInstantance().getListaUsuarios();
+        request.setAttribute("usuarios", lista);
+        servlet.setState(servlet.getUsuarios());
     }
 
     @Override
@@ -44,32 +52,12 @@ public class Carrinho implements State {
 
     @Override
     public void removerDoCarrinho() {
-        int i = Integer.parseInt(request.getParameter("index"));
-        
-        ArrayList<Produto> lista = (ArrayList) session.getAttribute("listaCompras");
-        
-        lista.remove(i);
-        
-        session.setAttribute("listaCompras", lista);  
-        
-        if(lista == null || lista.isEmpty()) {
-            session.setAttribute("aux", 0);
-        } else {
-            session.setAttribute("aux", 1);
-        }
-        Double total = 0.0;
-        for(Produto p : lista) {
-            total += p.custo();
-        }
-        session.setAttribute("valor", total.toString());               
-        servlet.setState(servlet.getCarrinhoState());
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void finalizarCompra() {
-        ArrayList<Produto> lista = new ArrayList();
-        session.setAttribute("listaCompras", lista);
-        servlet.setState(servlet.getFinalizarCompra());
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -88,28 +76,28 @@ public class Carrinho implements State {
     }
 
     @Override
+    public void estoque() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
     public void setRequest(HttpServletRequest request) {
         this.request = request;
         this.session = request.getSession();
     }
 
     @Override
-    public String url() {
-        return url;
-    }
-    
-    @Override
-    public void voltar() {
-        servlet.setState(servlet.getHomeState());
-    }    
-
-    @Override
-    public void estoque() {
+    public void carrinho() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void carrinho() {
-        throw new UnsupportedOperationException("Not supported yet.");        
+    public String url() {
+        return url;
+    }
+
+    @Override
+    public void voltar() {
+        servlet.setState(servlet.getHomeState());
     }
 }

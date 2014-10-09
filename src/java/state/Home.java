@@ -10,6 +10,7 @@ import decorator.Componente3;
 import decorator.Produto;
 import java.util.ArrayList;
 import model.Componente;
+import model.Usuario;
 import singleton.Banco;
 
 public class Home implements State {
@@ -116,7 +117,11 @@ public class Home implements State {
 
     @Override
     public void descadastrarUsuario() {   
-        throw new UnsupportedOperationException("Not supported yet.");        
+        ArrayList<Usuario> lista = Banco.getInstantance().getListaUsuarios();
+        Usuario u = (Usuario) session.getAttribute("currentUser");
+        lista.remove(u);
+        request.setAttribute("usuarios", lista);
+        servlet.setState(servlet.getUsuarios());
     }
 
     @Override

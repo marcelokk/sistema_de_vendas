@@ -10,10 +10,10 @@
     <center>
         <h1>Compra Finalizada Com Sucesso</h1>
 
-        <h2>Obrigado por escolher a Papelaria Web</h2>
+        <h2>Obrigado por escolher [nome do site]</h2>
 
         <p>Observe que apenas o produtos com estoque suficiente foram processados</p>
-        <a href="home.jsp">Voltar</a>
+        <a href="Servlet?acao=voltar">Voltar</a>         
     </center>
     </body>
 </html>

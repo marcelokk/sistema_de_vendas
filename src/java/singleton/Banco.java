@@ -107,11 +107,19 @@ public class Banco {
     public ArrayList getListaComponentes() {
         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
         hSession.beginTransaction();
-        ArrayList<Usuario> listaComponentes = (ArrayList) hSession.createQuery("from Componente").list();
+        ArrayList<Componente> listaComponentes = (ArrayList) hSession.createQuery("from Componente").list();
         hSession.getTransaction().commit();
         return listaComponentes;
     }
     // metodos de banco de dados
+
+    public ArrayList getListaUsuarios() {
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+        ArrayList<Usuario> listaUsuarios = (ArrayList) hSession.createQuery("from Usuario").list();
+        hSession.getTransaction().commit();
+        return listaUsuarios;
+    }
 
     public Usuario getUsuario(String login) {
         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -140,6 +148,14 @@ public class Banco {
         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
         hSession.beginTransaction();
         Query q = hSession.createQuery("delete from Componente as x where x.id=:id").setParameter("id", index);
+        q.executeUpdate();
+        hSession.getTransaction().commit();
+    }
+
+    public void removeUsuario(int index) {
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+        Query q = hSession.createQuery("delete from Usuario as x where x.id=:id").setParameter("id", index);
         q.executeUpdate();
         hSession.getTransaction().commit();
     }

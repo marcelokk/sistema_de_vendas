@@ -1,5 +1,11 @@
 package control;
 
+/*
+ * consertar a alteracao de produtos
+ * consertar a colocar produtos no carrinho
+ * colocar o iterator
+ * fazer a sugestao do dia
+ */
 import java.io.IOException;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -15,9 +21,11 @@ import state.Carrinho;
 import state.EditarDadosPessoais;
 import state.EditarProduto;
 import state.Estoque;
+import state.FinalizarCompra;
 import state.Home;
 import state.Login;
 import state.State;
+import state.Usuarios;
 
 // .sqlite my.db < arq.sql
 @WebServlet(name = "Servlet", urlPatterns = {"/Servlet"})
@@ -29,10 +37,12 @@ public class Servlet extends HttpServlet {
     private State state;
     private State cadastro;
     private State editarDadosPessoais;
+    private State usuarios;
     private State carrinho;
     private State cadastrarProdutos;
     private State estoque;
     private State editarProduto;
+    private State finalizarCompra;
     private String url;
     private HttpSession session;
     private String titulo = "Sistema de Vendas - Login";
@@ -75,7 +85,15 @@ public class Servlet extends HttpServlet {
     public State getEditarProduto() {
         return editarProduto;
     }
+
+    public State getUsuarios() {
+        return usuarios;
+    }
     
+    public State getFinalizarCompra() {
+        return finalizarCompra;
+    }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -96,6 +114,8 @@ public class Servlet extends HttpServlet {
                 cadastrarProdutos = new CadastroProdutos(this);
                 estoque = new Estoque(this);
                 editarProduto = new EditarProduto(this);
+                usuarios = new Usuarios(this);
+                finalizarCompra = new FinalizarCompra(this);
                 
                 session.setAttribute("titulo", titulo);
                 session.setAttribute("nome_do_site", nome_do_site);
@@ -139,6 +159,14 @@ public class Servlet extends HttpServlet {
                 state.setRequest(request);
                 state.cadastrarProduto();
                 url = state.url();
+            } else if (acao.equals("usuarios")) {
+                state.setRequest(request);
+                state.descadastrarUsuario();
+                url = state.url();
+            } else if (acao.equals("removeUsuario")) {
+                state.setRequest(request);
+                state.descadastrarUsuario();
+                url = state.url();
             }
 
             // .. resto dos elseifs
@@ -176,6 +204,14 @@ public class Servlet extends HttpServlet {
         } else if (acao.equals("cadastrar_produtos")) {
             state.setRequest(request);
             state.cadastrarProduto();
+            url = state.url();
+        } else if (acao.equals("sugestao")) {
+            state.setRequest(request);
+            //state.cadastrarSugestao();
+            url = state.url();
+        } else if (acao.equals("compra_finalizada")) {
+            state.setRequest(request);
+            state.finalizarCompra();
             url = state.url();
         }
         if (!"".equals(url)) {
