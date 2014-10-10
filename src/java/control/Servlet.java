@@ -1,8 +1,7 @@
 package control;
 
 /*
- * consertar a alteracao de produtos
- * consertar a colocar produtos no carrinho
+ * consertar o componente zero e o quartro que esta na lista da home
  * colocar o iterator
  * fazer a sugestao do dia
  */

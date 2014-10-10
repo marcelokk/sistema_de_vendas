@@ -63,7 +63,7 @@ public class EditarProduto implements State {
     public void cadastrarProduto() {
 
         // ----- select -----
-        Componente c = (Componente) request.getAttribute("currentProduto");
+        Componente c = (Componente) session.getAttribute("currentProduto");
 
         // ----- checa se o usuario ja existe no banco de dados -----
         boolean existe = false;

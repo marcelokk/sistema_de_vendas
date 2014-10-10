@@ -36,8 +36,11 @@ public class Home implements State {
         ArrayList<Componente> lista = Banco.getInstantance().getListaComponentes();
         for (int i = 0; i < lista.size(); i++) {
             if (request.getParameter("checkbox" + i) != null) {
+                System.out.println("##### checkbox" + i + " nao e' null");
 
-                if (i == 1) {
+                if (i == 0) {
+                    p = new Componente1(p);
+                } else if (i == 1) {
                     p = new Componente1(p);
                 } else if (i == 2) {
                     p = new Componente2(p);
@@ -45,14 +48,13 @@ public class Home implements State {
                     p = new Componente3(p);
                 }
             }
-
-            ArrayList<Produto> carrinho = (ArrayList) session.getAttribute("listaCompras");
-            if (carrinho == null) {
-                carrinho = new ArrayList();
-            }
-            carrinho.add(p);
-            session.setAttribute("listaCompras", carrinho);
         }
+        ArrayList<Produto> carrinho = (ArrayList) session.getAttribute("listaCompras");
+        if (carrinho == null) {
+            carrinho = new ArrayList();
+        }
+        carrinho.add(p);
+        session.setAttribute("listaCompras", carrinho);
         servlet.setState(servlet.getHomeState());
     }
 
@@ -87,7 +89,7 @@ public class Home implements State {
         ArrayList<Componente> listaProdutos = Banco.getInstantance().getListaComponentes();
         // ----- salva na sessao -----
         session.setAttribute("produtos", listaProdutos);
-        servlet.setState(servlet.getHomeState());          
+        servlet.setState(servlet.getHomeState());
     }
 
     @Override
@@ -116,7 +118,7 @@ public class Home implements State {
     }
 
     @Override
-    public void descadastrarUsuario() {   
+    public void descadastrarUsuario() {
         ArrayList<Usuario> lista = Banco.getInstantance().getListaUsuarios();
         Usuario u = (Usuario) session.getAttribute("currentUser");
         lista.remove(u);
