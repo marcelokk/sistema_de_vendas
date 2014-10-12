@@ -1,8 +1,12 @@
 package singleton;
 
+import decorator.Produto;
+import iterator.Transacao;
 import java.util.ArrayList;
+import java.util.Set;
 import model.Componente;
 import model.Compra;
+import model.Item;
 import model.Usuario;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -121,6 +125,23 @@ public class Banco {
         return listaUsuarios;
     }
 
+    public ArrayList getListaTransacoes(Usuario u) {
+        ArrayList<Transacao> listaTransacoes = new ArrayList();
+        
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+        ArrayList<Compra> listaCompras = (ArrayList) hSession.createQuery("from Compra as "
+                + "c where c.usuario=:id").setParameter("id", u.getId()).list();
+        hSession.getTransaction().commit();
+        
+        for(Compra c : listaCompras) {
+            Transacao t = new Transacao(c, c.getItens());
+            listaTransacoes.add(t);
+        }
+        
+        return listaTransacoes;
+    }
+
     public Usuario getUsuario(String login) {
         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
         hSession.beginTransaction();
@@ -204,6 +225,31 @@ public class Banco {
         c2.setQuantidade(c.getQuantidade());
         c2.setStatus(c.getStatus());
         c2.setValor(c.getValor());
+
+        hSession.getTransaction().commit();
+    }
+
+    public void finalizarCompra(ArrayList<Produto> listaProdutos, Usuario u) {
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+
+        Compra c = new Compra();
+        Set set = c.getItens();
+
+        for (Produto p : listaProdutos) {
+            Item i = new Item();
+            i.setDescricao(p.descricao());
+            i.setValor(p.custo());
+            set.add(i);
+        }
+        hSession.getTransaction().commit();
+
+
+        hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+
+        Set set2 = u.getCompras();
+        set2.add(c);
 
         hSession.getTransaction().commit();
     }

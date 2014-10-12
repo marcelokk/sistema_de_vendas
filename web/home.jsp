@@ -17,7 +17,8 @@
         <h1>Ola, ${currentUser.nome}</h1>
 
         <c:if test="${currentUser.administrador == 0}">
-            <a href="Servlet?acao=carrinho">Carrinho de compras</a>
+            <a href="Servlet?acao=carrinho">Carrinho de Compras</a>
+            <a href="Servlet?acao=historico">Historico de Compras</a>
         </c:if>
         <a href="Servlet?acao=cadastro">Editar dados pessoais</a>
 

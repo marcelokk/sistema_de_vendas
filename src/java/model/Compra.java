@@ -1,10 +1,22 @@
 package model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Compra {
     private int id;
     private int usuario;
     private String data_da_compra;
+    private Set itens = new HashSet();
 
+    public Set getItens() {
+        return itens;
+    }
+
+    public void setItens(Set itens) {
+        this.itens = itens;
+    }
+    
     public Compra() {
         
     }

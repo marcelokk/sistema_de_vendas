@@ -6,7 +6,6 @@ package control;
  * fazer a sugestao do dia
  */
 import java.io.IOException;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +20,7 @@ import state.EditarDadosPessoais;
 import state.EditarProduto;
 import state.Estoque;
 import state.FinalizarCompra;
+import state.Historico;
 import state.Home;
 import state.Login;
 import state.State;
@@ -42,12 +42,11 @@ public class Servlet extends HttpServlet {
     private State estoque;
     private State editarProduto;
     private State finalizarCompra;
+    private State historico;
     private String url;
     private HttpSession session;
     private String titulo = "Sistema de Vendas - Login";
     private String nome_do_site = "Sistema de Vendas";
-    private String nameOfLogger = Login.class.getName();
-    private Logger myLogger = Logger.getLogger(nameOfLogger);
 
     public void setState(State state) {
         this.state = state;
@@ -92,6 +91,10 @@ public class Servlet extends HttpServlet {
     public State getFinalizarCompra() {
         return finalizarCompra;
     }
+    
+    public State getHistorico() {
+        return historico;
+    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -115,6 +118,7 @@ public class Servlet extends HttpServlet {
                 editarProduto = new EditarProduto(this);
                 usuarios = new Usuarios(this);
                 finalizarCompra = new FinalizarCompra(this);
+                historico = new Historico(this);
                 
                 session.setAttribute("titulo", titulo);
                 session.setAttribute("nome_do_site", nome_do_site);
@@ -165,6 +169,10 @@ public class Servlet extends HttpServlet {
             } else if (acao.equals("removeUsuario")) {
                 state.setRequest(request);
                 state.descadastrarUsuario();
+                url = state.url();
+            } else if (acao.equals("historico")) {
+                state.setRequest(request);
+                state.detalhes();
                 url = state.url();
             }
 

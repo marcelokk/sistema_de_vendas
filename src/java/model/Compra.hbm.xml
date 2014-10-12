@@ -7,5 +7,11 @@
     </id>
     <property column="usuario" name="usuario"/>
     <property column="data_da_compra" name="data_da_compra"/>
+    
+    <set name="itens" lazy="false">
+      <key column="id" />
+      <one-to-many class="model.Item"/>
+    </set>
+    
   </class>
 </hibernate-mapping>

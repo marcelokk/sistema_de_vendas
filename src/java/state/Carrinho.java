@@ -5,6 +5,11 @@ import javax.servlet.http.HttpSession;
 import control.Servlet;
 import decorator.Produto;
 import java.util.ArrayList;
+import java.util.Set;
+import model.Compra;
+import model.Item;
+import model.Usuario;
+import singleton.Banco;
 
 public class Carrinho implements State {
 
@@ -67,7 +72,12 @@ public class Carrinho implements State {
 
     @Override
     public void finalizarCompra() {
-        ArrayList<Produto> lista = new ArrayList();
+        ArrayList<Produto> lista = (ArrayList) session.getAttribute("listaCompras");
+        
+        Usuario u = (Usuario) session.getAttribute("currentUser");
+        Banco.getInstantance().finalizarCompra(lista, u);
+        
+        lista = new ArrayList();
         session.setAttribute("listaCompras", lista);
         servlet.setState(servlet.getFinalizarCompra());
     }

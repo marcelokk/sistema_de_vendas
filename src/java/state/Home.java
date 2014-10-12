@@ -8,8 +8,12 @@ import decorator.Componente1;
 import decorator.Componente2;
 import decorator.Componente3;
 import decorator.Produto;
+import iterator.Iterator;
+import iterator.Transacao;
 import java.util.ArrayList;
 import model.Componente;
+import model.Compra;
+import model.Item;
 import model.Usuario;
 import singleton.Banco;
 
@@ -70,7 +74,27 @@ public class Home implements State {
 
     @Override
     public void detalhes() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        //*
+        Usuario u = (Usuario) session.getAttribute("currentUser");
+        
+        ArrayList<Transacao> lista = Banco.getInstantance().getListaTransacoes(u);
+        ArrayList<String> listaProdutos = new ArrayList();
+        ArrayList<Double> listaValores = new ArrayList();        
+        
+        for(Transacao t : lista) {
+            Iterator it = t.createIterator();
+            while(it.hasNext()) {
+                Item item = (Item) it.next();
+                listaProdutos.add(item.getDescricao());
+                listaValores.add(item.getValor());
+            }
+        }
+        
+        request.setAttribute("produtos", listaProdutos);
+        request.setAttribute("valores", listaValores);
+        
+        servlet.setState(servlet.getHistorico());
+        //* */
     }
 
     @Override

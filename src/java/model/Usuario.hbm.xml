@@ -15,6 +15,12 @@
         <property column="nome" name="nome"/>
         <property column="cidade" name="cidade"/>
         <property column="estado" name="estado"/>
-        <property column="telefone" name="telefone"/>        
+        <property column="telefone" name="telefone"/>     
+        
+    <set name="compras">
+      <key column="id" />
+      <one-to-many class="model.Compra"/>
+    </set>        
+           
     </class> 
 </hibernate-mapping>

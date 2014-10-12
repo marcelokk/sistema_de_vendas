@@ -1,24 +1,24 @@
 package iterator;
 
-import java.util.ArrayList;
+import java.util.Set;
 import model.Item;
 
 public class TransacaoIterator implements Iterator {
-    private ArrayList<Item> items;
+    private Item[] items;
     int position = 0;
     
-    public TransacaoIterator(ArrayList items) {
-        this.items = items;
+    public TransacaoIterator(Set items) {
+        this.items = (Item[]) items.toArray();
     }
     
-    public Object next() {
-        Item i = items.get(position);
+    public Item next() {
+        Item i = items[position];
         position++;
         return i;
     }
     
     public boolean hasNext() {
-        if(position >= items.size() || items.get(position) == null) {
+        if(position >= items.length || items[position] == null) {
             return false;
         } else {
             return true;

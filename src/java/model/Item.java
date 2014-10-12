@@ -8,7 +8,7 @@ public class Item {
     public Item() {
         
     }
-    
+
     public int getId() {
         return id;
     }
@@ -16,7 +16,7 @@ public class Item {
     public void setId(int id) {
         this.id = id;
     }
-
+    
     public String getDescricao() {
         return descricao;
     }

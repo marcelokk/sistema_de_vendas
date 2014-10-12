@@ -1,6 +1,8 @@
 package iterator;
 
+import model.Item;
+
 public interface Iterator {
     public boolean hasNext();
-    public Object next();
+    public Item next();
 }

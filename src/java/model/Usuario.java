@@ -1,5 +1,8 @@
 package model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Usuario {
     private int id;
     private String login;
@@ -9,6 +12,15 @@ public class Usuario {
     private String cidade;
     private String estado;
     private String telefone;
+    private Set compras = new HashSet();
+
+    public Set getCompras() {
+        return compras;
+    }
+
+    public void setCompras(Set compras) {
+        this.compras = compras;
+    }
 
     public Usuario(String login, String password, int administrador, String nome, String cidade, String estado, String telefone) {
         this.login = login;
