@@ -27,9 +27,15 @@
             <a href="Servlet?acao=cadastrar_produtos">Cadastro de Produtos</a>
             <a href="Servlet?acao=usuarios">Usarios Cadastrados</a>
         </c:if>
-
+            
+        <c:if test="${currentUser.administrador == 1}">
+        <h2>Produtos no Estoque</h2>
+        </c:if>
+        
+       <c:if test="${currentUser.administrador == 0}">
         <h2>Personalize seu Produto</h2>
-
+        </c:if>        
+        
         <c:if test="${currentUser.administrador == 1}">
             <form method="POST" action="Servlet?acao=sugestao">             
             </c:if>

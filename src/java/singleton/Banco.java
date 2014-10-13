@@ -39,6 +39,7 @@ public class Banco {
         ArrayList<Componente> listaComponentes = (ArrayList) hSession.createQuery("from Componente").list();
         hSession.getTransaction().commit();
 
+        // se nao tem nenhum componente, cria 4 default
         if (listaComponentes != null && listaComponentes.isEmpty()) {
             hSession = HibernateUtil.getSessionFactory().getCurrentSession();
             hSession.beginTransaction();
@@ -48,14 +49,6 @@ public class Banco {
             hSession.save(new Componente(4, "componente4", 30, 1.0, 1, "descricao do componente 4"));
             hSession.getTransaction().commit();
         }
-
-        /*
-         hSession = HibernateUtil.getSessionFactory().getCurrentSession();
-         hSession.beginTransaction();
-         Query q = hSession.createQuery("delete from Compra");
-         q.executeUpdate();
-         hSession.getTransaction().commit();        
-         */
     }
 
     public static Banco getInstantance() {

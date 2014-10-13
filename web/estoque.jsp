@@ -5,10 +5,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Historico</title>
+        <title>Estoque</title>
     </head>
     <body>
-    <jsp:useBean id="listaCompras" type="java.util.List" scope="session"/>   
+    <jsp:useBean id="produtos" type="java.util.List" scope="session"/>   
 
     <center>
         <h1>Produtos no Estoque</h1>
@@ -20,11 +20,11 @@
                 <th>Valor</th>
             </tr>
 
-            <c:forEach items="${listaCompras}" var="p" varStatus="i">
+            <c:forEach items="${produtos}" var="p" varStatus="i">
                 <tr>
-                    <td>${p.descricao()}</td> 
-                    <td>1</td>
-                    <td>${p.custo()}</td>
+                    <td>${p.nome}</td> 
+                    <td>${p.quantidade}</td>
+                    <td>${p.valor}</td>
                 </tr>
             </c:forEach>   
 

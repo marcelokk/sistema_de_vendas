@@ -48,24 +48,29 @@ public class Servlet extends HttpServlet {
     private String titulo = "Sistema de Vendas - Login";
     private String nome_do_site = "Sistema de Vendas";
 
+    /// Getters do State Design Pattern
     public void setState(State state) {
         this.state = state;
     }
 
-    public State getLoginState() {
-        return login;
+    public State getEstoque() {
+        return estoque;
     }
 
     public State getHomeState() {
         return home;
     }
 
-    public State getCadastroState() {
-        return cadastro;
+    public State getUsuarios() {
+        return usuarios;
     }
 
-    public State getEditarDadosPessoaisState() {
-        return editarDadosPessoais;
+    public State getLoginState() {
+        return login;
+    }
+
+    public State getCadastroState() {
+        return cadastro;
     }
 
     public State getCarrinhoState() {
@@ -76,26 +81,23 @@ public class Servlet extends HttpServlet {
         return cadastrarProdutos;
     }
 
-    public State getEstoque() {
-        return estoque;
+    public State getEditarDadosPessoaisState() {
+        return editarDadosPessoais;
     }
 
     public State getEditarProduto() {
         return editarProduto;
     }
 
-    public State getUsuarios() {
-        return usuarios;
-    }
-    
     public State getFinalizarCompra() {
         return finalizarCompra;
     }
-    
+
     public State getHistorico() {
         return historico;
     }
 
+    // Metodos do Servlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -119,7 +121,7 @@ public class Servlet extends HttpServlet {
                 usuarios = new Usuarios(this);
                 finalizarCompra = new FinalizarCompra(this);
                 historico = new Historico(this);
-                
+
                 session.setAttribute("titulo", titulo);
                 session.setAttribute("nome_do_site", nome_do_site);
 
@@ -130,47 +132,58 @@ public class Servlet extends HttpServlet {
                 state.setRequest(request);
                 state.cadastro();
                 url = state.url();
-            } else if (acao.equals("voltar")) {
+            } // usuario clica no botao voltar de qualquer pagina 
+            else if (acao.equals("voltar")) {
                 state.setRequest(request);
                 state.voltar();
                 url = state.url();
-            } else if (acao.equals("deslogar")) {
+            } // usuario clica no botao deslogar da home
+            else if (acao.equals("deslogar")) {
                 state.setRequest(request);
                 state.deslogar();
                 url = state.url();
-            } else if (acao.equals("carrinho")) {
+            } // usuario clica no botao carrinho de compras da home
+            else if (acao.equals("carrinho")) {
                 state.setRequest(request);
                 state.carrinho();
                 url = state.url();
-            } else if (acao.equals("cadastrar_produtos")) {
+            } // administrador clica no botao cadastrar produtos
+            else if (acao.equals("cadastrar_produtos")) {
                 state.setRequest(request);
                 state.cadastrarProduto();
                 url = state.url();
-            } else if (acao.equals("estoque")) {
+            } // administrador clica no botao de estoque
+            else if (acao.equals("estoque")) {
                 state.setRequest(request);
                 state.estoque();
                 url = state.url();
-            } else if (acao.equals("remover")) {
+            } // usuario clica para remover um produto do carrinho de compras
+            else if (acao.equals("remover")) {
                 state.setRequest(request);
                 state.removerDoCarrinho();
                 url = state.url();
-            } else if (acao.equals("descadastrar_produto")) {
+            } // administrador clica no botao de descadastrar um produto na pagina de estoque
+            else if (acao.equals("descadastrar_produto")) {
                 state.setRequest(request);
                 state.descadastrarProduto();
                 url = state.url();
-            } else if (acao.equals("alterar")) {
+            } // administrador clica no botao de alterar na pagina de estoque 
+            else if (acao.equals("alterar")) {
                 state.setRequest(request);
                 state.cadastrarProduto();
                 url = state.url();
-            } else if (acao.equals("usuarios")) {
+            } // administrador clica no botao usuario na home 
+            else if (acao.equals("usuarios")) {
                 state.setRequest(request);
                 state.descadastrarUsuario();
                 url = state.url();
-            } else if (acao.equals("removeUsuario")) {
+            } // administrador remove um usuario 
+            else if (acao.equals("removeUsuario")) {
                 state.setRequest(request);
                 state.descadastrarUsuario();
                 url = state.url();
-            } else if (acao.equals("historico")) {
+            } // usuario clica no botao de historico de compras na home 
+            else if (acao.equals("historico")) {
                 state.setRequest(request);
                 state.detalhes();
                 url = state.url();
@@ -196,27 +209,33 @@ public class Servlet extends HttpServlet {
         String acao = (String) request.getParameter("acao");
         url = "";
 
+        // usuario clica no botao logar na pagina de login
         if (acao.equals("logar")) {
             state.setRequest(request);
             state.logar((String) request.getParameter("login"), (String) request.getParameter("password"));
             url = state.url();
-        } else if (acao.equals("cadastrar")) {
+        } // usuario clica no botao de cadastro na pagina de login 
+        else if (acao.equals("cadastrar")) {
             state.setRequest(request);
             state.cadastro();
             url = state.url();
-        } else if (acao.equals("comprar")) {
+        } // usuario monta um produto e insere no carrinho 
+        else if (acao.equals("comprar")) {
             state.setRequest(request);
             state.inserirNoCarrinho();
             url = state.url();
-        } else if (acao.equals("cadastrar_produtos")) {
+        } // administrador cadastra um produto 
+        else if (acao.equals("cadastrar_produtos")) {
             state.setRequest(request);
             state.cadastrarProduto();
             url = state.url();
-        } else if (acao.equals("sugestao")) {
+        } // administrador cadastra uma sugestao 
+        else if (acao.equals("sugestao")) {
             state.setRequest(request);
             //state.cadastrarSugestao();
             url = state.url();
-        } else if (acao.equals("compra_finalizada")) {
+        } // usuario clica para finalizar a sua compra 
+        else if (acao.equals("compra_finalizada")) {
             state.setRequest(request);
             state.finalizarCompra();
             url = state.url();
