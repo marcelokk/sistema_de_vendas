@@ -3,8 +3,7 @@ package iterator;
 import java.util.Set;
 import model.Compra;
 import model.Item;
-import model.Usuario;
-import singleton.Banco;
+
 
 public class Transacao {
 
@@ -14,10 +13,6 @@ public class Transacao {
     public Transacao(Compra compra, Set items) {
         this.compra = compra;
         this.items = items;
-    }
-
-    public Usuario getUsuario() {
-        return Banco.getInstantance().getUsuario(compra.getUsuario());
     }
 
     public String getData() {

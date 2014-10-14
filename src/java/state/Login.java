@@ -57,7 +57,7 @@ public class Login implements State {
     public void cadastro() {
         //session.setAttribute("currentUser", "");
         request.setAttribute("mensagem", "Cadastro de Novo Usuario");
-        request.setAttribute("disabled", "false");
+        request.setAttribute("disabled", "0");
         request.setAttribute("botao", "Cadastrar");        
         Usuario u = new Usuario();
         session.setAttribute("currentUser", u);

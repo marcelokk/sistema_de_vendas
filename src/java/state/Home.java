@@ -119,7 +119,7 @@ public class Home implements State {
     @Override
     public void cadastro() {
         request.setAttribute("mensagem", "Editar Dados Pessoais");
-        request.setAttribute("disabled", "true");
+        request.setAttribute("disabled", "1");
         request.setAttribute("botao", "Atualizar");
         servlet.setState(servlet.getEditarDadosPessoaisState());
     }

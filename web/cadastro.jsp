@@ -151,7 +151,13 @@
 
                 <tr>
                     <td>Login:</td>
-                    <td><input type="text" name="login" placeholder="seu email aqui" required="true" value="${currentUser.login}" readonly="${disabled}"></td>
+                    <c:if test="${disabled == 0}">
+                    <td><input type="text" name="login" placeholder="seu email aqui" required="true" value="${currentUser.login}"></td>
+                    </c:if>
+                    
+                    <c:if test="${disabled == 1}">
+                    <td><input type="text" name="login" placeholder="seu email aqui" required="true" value="${currentUser.login}" readonly></td>
+                    </c:if>          
                 </tr>
 
                 <tr>
