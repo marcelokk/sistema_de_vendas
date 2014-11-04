@@ -55,6 +55,7 @@ public class EditarDadosPessoais implements State {
             usuario.setTelefone(request.getParameter("telefone"));
             usuario.setCidade(request.getParameter("cidade"));
             usuario.setEstado(request.getParameter("estado"));
+            usuario.setNascimento(request.getParameter("nascimento"));
             Banco.getInstantance().updateUsuario(usuario);
             session.setAttribute("currentUser", usuario);
         } else {

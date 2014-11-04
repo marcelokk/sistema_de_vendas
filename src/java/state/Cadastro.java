@@ -52,6 +52,7 @@ public class Cadastro implements State {
             u.setTelefone(request.getParameter("telefone"));
             u.setCidade(request.getParameter("cidade"));
             u.setEstado(request.getParameter("estado"));
+            u.setNascimento(request.getParameter("nascimento"));
 
             System.out.println("##### INSERIU O USUARIO #####");
             // ----- adiciona o usuario no banco de dados -----

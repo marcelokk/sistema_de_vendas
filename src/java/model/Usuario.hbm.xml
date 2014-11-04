@@ -15,7 +15,8 @@
         <property column="nome" name="nome"/>
         <property column="cidade" name="cidade"/>
         <property column="estado" name="estado"/>
-        <property column="telefone" name="telefone"/>     
+        <property column="telefone" name="telefone"/> 
+        <property column="nascimento" name="nascimento"/>
         
     <set name="compras" lazy="false">
       <key column="id" />

@@ -6,36 +6,43 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home</title>
+        <link href="styles/main.css" rel="stylesheet" type="text/css">
     </head>
 
     <body>
         <jsp:useBean id="currentUser" type="model.Usuario" scope="session"/>
         <jsp:useBean id="produtos" type="java.util.List" scope="session"/>
 
-        <a href="Servlet?acao=logout">Logout</a>
     <center>
-        <h1>Ola, ${currentUser.nome}</h1>
+        <header id="top">
+            <h1>Ola, ${currentUser.nome}</h1>
+            <nav id="mainnav">
+                <ul>
+
+                    <c:if test="${currentUser.administrador == 0}">
+                        <li><a href="Servlet?acao=carrinho">Carrinho de Compras</a></li>
+                        <li><a href="Servlet?acao=historico">Historico de Compras</a></li>
+                    </c:if>
+                    <li><a href="Servlet?acao=cadastro">Editar dados pessoais</a></li>
+
+                    <c:if test="${currentUser.administrador == 1}">
+                        <li><a href="Servlet?acao=estoque">Estoque</a></li>
+                        <li><a href="Servlet?acao=cadastrar_produtos">Cadastro de Produtos</a></li>
+                        <li><a href="Servlet?acao=usuarios">Usarios Cadastrados</a></li>
+                    </c:if>
+                    <li><a href="Servlet?acao=logout">Logout</a></li>            
+                </ul>
+            </nav>
+        </header>           
+
+        <c:if test="${currentUser.administrador == 1}">
+            <h2>Produtos no Estoque</h2>
+        </c:if>
 
         <c:if test="${currentUser.administrador == 0}">
-            <a href="Servlet?acao=carrinho">Carrinho de Compras</a>
-            <a href="Servlet?acao=historico">Historico de Compras</a>
-        </c:if>
-        <a href="Servlet?acao=cadastro">Editar dados pessoais</a>
-
-        <c:if test="${currentUser.administrador == 1}">
-            <a href="Servlet?acao=estoque">Estoque</a>
-            <a href="Servlet?acao=cadastrar_produtos">Cadastro de Produtos</a>
-            <a href="Servlet?acao=usuarios">Usarios Cadastrados</a>
-        </c:if>
-            
-        <c:if test="${currentUser.administrador == 1}">
-        <h2>Produtos no Estoque</h2>
-        </c:if>
-        
-       <c:if test="${currentUser.administrador == 0}">
-        <h2>Personalize seu Produto</h2>
+            <h2>Personalize seu Produto</h2>
         </c:if>        
-        
+
         <c:if test="${currentUser.administrador == 1}">
             <form method="POST" action="Servlet?acao=sugestao">             
             </c:if>

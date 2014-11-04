@@ -9,6 +9,8 @@
 
         <title>Cadastro</title>
 
+        <script src="http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>
+
         <script type="text/javascript">
             function Letra(l){
                 var caractervalido = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
@@ -88,8 +90,43 @@
                     return false;
                 }
             }
-        </script>        
+        </script>    
 
+        <script>
+            function teste() {
+                if(document.getElementById("mycalendar").style.display == "none") {
+                    document.getElementById("mycalendar").style.display = "block";            
+                } else {
+                    document.getElementById("mycalendar").style.display = "none";            
+
+                }
+                //document.getElementById("mycalendar").style.visibility = "hidden";
+                //document.getElementById("mycalendar").style.display = "none";            
+            }    
+        </script>
+
+
+        <script type="text/javascript">
+            YUI().use('calendar', 'datatype-date', 'cssbutton',  function(Y) {
+                var calendar = new Y.Calendar({
+                    contentBox: "#mycalendar",
+                    width:'340px',
+                    showPrevMonth: true,
+                    showNextMonth: true,
+                    date: new Date()}).render();
+
+                var dtdate = Y.DataType.Date;
+
+                calendar.on("selectionChange", function (ev) {
+
+                    var newDate = ev.newSelection[0];
+                    //Y.one("#selecteddate").setHTML(dtdate.format(newDate));
+                
+                    var elem = document.getElementById("mytext");
+                    elem.value = dtdate.format(newDate);
+                });
+            });
+        </script>            
     </head>
     <body>
 
@@ -150,14 +187,26 @@
                 </tr>
 
                 <tr>
+                    <td>Data de Nascimento:</td>
+                    <td><input type="text" name="nascimento" id="mytext" onclick="teste()" value="${currentUser.nascimento}"></td> 
+                    <td>
+                        <div id="demo" class="yui3-skin-sam yui3-g">
+                            <div id="leftcolumn" class="yui3-u">
+                                <div id="mycalendar" style="display: none"></div>
+                            </div>
+                        </div>   
+                    </td>
+                </tr>
+
+                <tr>
                     <td>Login:</td>
                     <c:if test="${disabled == 0}">
-                    <td><input type="text" name="login" placeholder="seu email aqui" required="true" value="${currentUser.login}"></td>
-                    </c:if>
-                    
+                        <td><input type="text" name="login" placeholder="seu email aqui" required="true" value="${currentUser.login}"></td>
+                        </c:if>
+
                     <c:if test="${disabled == 1}">
-                    <td><input type="text" name="login" placeholder="seu email aqui" required="true" value="${currentUser.login}" readonly></td>
-                    </c:if>          
+                        <td><input type="text" name="login" placeholder="seu email aqui" required="true" value="${currentUser.login}" readonly></td>
+                        </c:if>          
                 </tr>
 
                 <tr>
@@ -172,10 +221,11 @@
 
             </table>
             <input type="submit" name="submit" value="${botao}">
-        </form>
+        </form>       
 
         <a href="Servlet?acao=voltar">voltar</a>         
 
     </center> 
+
 </body>
 </html>

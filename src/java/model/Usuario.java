@@ -13,6 +13,7 @@ public class Usuario {
     private String estado;
     private String telefone;
     private Set compras = new HashSet();
+    private String nascimento;
 
     public Set getCompras() {
         return compras;
@@ -97,6 +98,14 @@ public class Usuario {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getNascimento() {
+        return nascimento;
+    }
+
+    public void setNascimento(String nascimento) {
+        this.nascimento = nascimento;
     }
     
 }
