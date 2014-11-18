@@ -62,8 +62,8 @@
                     <td>Status</td>
                     <td>
                         <select name="status">
-                            <option value="1" label="Disponivel" ${currentProduto.status == "1" ? 'selected="true"' : '' }>Disponível</option>
-                            <option value="0" label="Finalizado" ${currentProduto.status == "0" ? 'selected="true"' : '' }>Finalizado</option>                                
+                            <option value="0" label="Disponivel" ${currentProduto.status == "0" ? 'selected="true"' : '' }>Disponível</option>
+                            <option value="1" label="Finalizado" ${currentProduto.status == "1" ? 'selected="true"' : '' }>Finalizado</option>                                
                         </select>
                     </td>
                 </tr>            

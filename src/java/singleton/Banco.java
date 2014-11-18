@@ -4,6 +4,7 @@ import decorator.Produto;
 import iterator.Transacao;
 import java.util.ArrayList;
 import java.util.Set;
+import model.Acai;
 import model.Componente;
 import model.Compra;
 import model.Item;
@@ -135,6 +136,14 @@ public class Banco {
         return listaTransacoes;
     }
 
+    public ArrayList getListaAcai() {
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+        ArrayList<Acai> listaAcai = (ArrayList) hSession.createQuery("from Acai").list();
+        hSession.getTransaction().commit();        
+        return listaAcai;
+    }
+    
     public Usuario getUsuario(String login) {
         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
         hSession.beginTransaction();

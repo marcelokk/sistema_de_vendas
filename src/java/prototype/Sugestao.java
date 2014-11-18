@@ -2,8 +2,6 @@ package prototype;
 
 import decorator.Base;
 import decorator.Componente1;
-import decorator.Componente2;
-import decorator.Componente3;
 import decorator.Produto;
 
 public class Sugestao extends SugestaoPrototype {
@@ -20,7 +18,7 @@ public class Sugestao extends SugestaoPrototype {
         if (s.charAt(s.length() - 1) == '0') {
             p = new Base();
         }
-
+/*
         for (int i = s.length() - 1; i >= 0; i--) {
             if (s.charAt(i) == '1') {
                 p = new Componente1(p);
@@ -30,6 +28,7 @@ public class Sugestao extends SugestaoPrototype {
                 p = new Componente3(p);
             }
         }
+        */ 
         this.produto = p;
     }
 

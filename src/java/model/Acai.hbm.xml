@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-  <class name="model.Componente" table="Componente">
+  <class name="model.Acai" table="Acai">
     <id column="id" name="id">
       <generator class="increment"/>
     </id>
     <property column="quantidade" name="quantidade"/>
-    <property column="nome" name="nome"/>
+    <property column="sabor" name="sabor"/>
     <property column="valor" name="valor"/>
-    <property column="status" name="status"/>
-    <property column="descricao" name="descricao"/>  
+    <property column="descricao" name="descricao"/>    
   </class>
 </hibernate-mapping>

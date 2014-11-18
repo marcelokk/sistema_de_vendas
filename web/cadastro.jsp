@@ -93,6 +93,14 @@
         </script>    
 
         <script>
+            function aparece() {
+                document.getElementById("mycalendar").style.display = "block";
+            }
+            
+            function desaparece() {
+                document.getElementById("mycalendar").style.display = "none";
+            }
+            
             function teste() {
                 if(document.getElementById("mycalendar").style.display == "none") {
                     document.getElementById("mycalendar").style.display = "block";            
@@ -189,15 +197,15 @@
                 <tr>
                     <td>Data de Nascimento:</td>
                     <td><input type="text" name="nascimento" id="mytext" onclick="teste()" value="${currentUser.nascimento}"></td> 
-                    <td>
-                        <div id="demo" class="yui3-skin-sam yui3-g">
+                    <td>    
+                <div id="demo" class="yui3-skin-sam yui3-g">
                             <div id="leftcolumn" class="yui3-u">
                                 <div id="mycalendar" style="display: none"></div>
                             </div>
-                        </div>   
+                        </div> 
                     </td>
                 </tr>
-
+                
                 <tr>
                     <td>Login:</td>
                     <c:if test="${disabled == 0}">

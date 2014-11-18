@@ -12,5 +12,6 @@
     <mapping resource="model/Componente.hbm.xml"/>
     <mapping resource="model/Compra.hbm.xml"/>
     <mapping resource="model/Item.hbm.xml"/>
+    <mapping resource="model/Acai.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

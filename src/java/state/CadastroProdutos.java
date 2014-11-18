@@ -73,6 +73,7 @@ public class CadastroProdutos implements State {
         
         // ----- recupera a lista de produtos do banco de dados -----
         ArrayList<Componente> listaProdutos = Banco.getInstantance().getListaComponentes();
+
         // ----- salva na sessao -----
         session.setAttribute("produtos", listaProdutos);
         servlet.setState(servlet.getHomeState());          

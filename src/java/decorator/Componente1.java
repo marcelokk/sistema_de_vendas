@@ -10,16 +10,37 @@ public class Componente1 extends Componentes {
     
     @Override
     public Double custo() {
-        return 2.0;
+        return this.custo + produto.custo();
     }
     
     @Override
     public String descricao() {
-        return produto.descricao() + " + Componente1";
+        return produto.descricao() + " + " + this.descricao;
     }
     
     @Override
     public String getComponentes() {
-        return produto.getComponentes() + "1";
+        return produto.getComponentes() + this.id;
     }    
+
+    @Override
+    public void setCusto(Double valor) {
+        this.custo = valor;
+    }
+
+    @Override
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    @Override
+    public int getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+    
 }

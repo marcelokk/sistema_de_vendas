@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import control.Servlet;
 import decorator.Produto;
 import java.util.ArrayList;
+import model.Acai;
 import model.Componente;
 import model.Usuario;
 import singleton.Banco;
@@ -42,8 +43,11 @@ public class Login implements State {
                 System.out.println("valor " + listaProdutos.get(i).getValor());
             }
 
+            ArrayList<Acai> listaAcai = Banco.getInstantance().getListaAcai();
+            
             // ----- salva na sessao -----
             session.setAttribute("produtos", listaProdutos);
+            session.setAttribute("lista_acai", listaAcai);
 
             ArrayList<Produto> lista = new ArrayList();
             session.setAttribute("listaCompras", lista);

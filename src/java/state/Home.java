@@ -5,12 +5,11 @@ import javax.servlet.http.HttpSession;
 import control.Servlet;
 import decorator.Base;
 import decorator.Componente1;
-import decorator.Componente2;
-import decorator.Componente3;
 import decorator.Produto;
 import iterator.Iterator;
 import iterator.Transacao;
 import java.util.ArrayList;
+import model.Acai;
 import model.Componente;
 import model.Compra;
 import model.Item;
@@ -37,20 +36,31 @@ public class Home implements State {
     @Override
     public void inserirNoCarrinho() {
         Produto p = new Base();
+
+        ArrayList<Acai> listaAcai = Banco.getInstantance().getListaAcai();
+        if (request.getParameter("acai") != null) {
+            int i = Integer.parseInt(request.getParameter("acai"));
+            p.setCusto(listaAcai.get(i).getValor());
+            p.setDescricao(listaAcai.get(i).getDescricao());
+            p.setId(listaAcai.get(i).getId());
+            System.out.println("acai " + listaAcai.get(i).getValor());
+            System.out.println("acai " + listaAcai.get(i).getDescricao());
+            System.out.println("acai " + listaAcai.get(i).getId());
+        } else {
+            servlet.setState(servlet.getHomeState());
+            return;
+        }
+
         ArrayList<Componente> lista = Banco.getInstantance().getListaComponentes();
+        System.out.println("tamanho da lista " + lista.size());
         for (int i = 0; i < lista.size(); i++) {
-            if (request.getParameter("checkbox" + i) != null) {
+            if (request.getParameter("checkbox" + lista.get(i).getId()) != null) {
                 System.out.println("##### checkbox" + i + " nao e' null");
 
-                if (i == 0) {
-                    p = new Componente1(p);
-                } else if (i == 1) {
-                    p = new Componente1(p);
-                } else if (i == 2) {
-                    p = new Componente2(p);
-                } else if (i == 3) {
-                    p = new Componente3(p);
-                }
+                p = new Componente1(p);
+                p.setCusto(lista.get(i).getValor());
+                p.setDescricao(lista.get(i).getDescricao());
+                p.setId(lista.get(i).getId());
             }
         }
         ArrayList<Produto> carrinho = (ArrayList) session.getAttribute("listaCompras");
@@ -76,23 +86,23 @@ public class Home implements State {
     public void detalhes() {
         //*
         Usuario u = (Usuario) session.getAttribute("currentUser");
-        
+
         ArrayList<Transacao> lista = Banco.getInstantance().getListaTransacoes(u);
         ArrayList<String> listaProdutos = new ArrayList();
-        ArrayList<Double> listaValores = new ArrayList();        
-        
-        for(Transacao t : lista) {
+        ArrayList<Double> listaValores = new ArrayList();
+
+        for (Transacao t : lista) {
             Iterator it = t.createIterator();
-            while(it.hasNext()) {
+            while (it.hasNext()) {
                 Item item = (Item) it.next();
                 listaProdutos.add(item.getDescricao());
                 listaValores.add(item.getValor());
             }
         }
-        
+
         request.setAttribute("produtos", listaProdutos);
         request.setAttribute("valores", listaValores);
-        
+
         servlet.setState(servlet.getHistorico());
         //* */
     }
@@ -110,7 +120,7 @@ public class Home implements State {
         int i = Integer.parseInt(request.getParameter("index"));
         Banco.getInstantance().removeComponente(i);
         // ----- recupera a lista de produtos do banco de dados -----
-        ArrayList<Componente> listaProdutos = Banco.getInstantance().getListaComponentes();
+        ArrayList<Componente1> listaProdutos = Banco.getInstantance().getListaComponentes();
         // ----- salva na sessao -----
         session.setAttribute("produtos", listaProdutos);
         servlet.setState(servlet.getHomeState());
