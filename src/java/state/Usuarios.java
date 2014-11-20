@@ -100,4 +100,19 @@ public class Usuarios implements State {
     public void voltar() {
         servlet.setState(servlet.getHomeState());
     }
+
+    @Override
+    public void cadastrarSugestao() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void removerSugestao() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void addSugestao() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

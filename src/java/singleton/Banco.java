@@ -1,12 +1,14 @@
 package singleton;
 
 import decorator.Produto;
-import iterator.Transacao;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Set;
 import model.Acai;
 import model.Componente;
-import model.Compra;
+import model.Sugestao;
 import model.Item;
 import model.Usuario;
 import org.hibernate.Query;
@@ -111,6 +113,14 @@ public class Banco {
     }
     // metodos de banco de dados
 
+    public ArrayList getListaSugestao() {
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+        ArrayList<Produto> listaSugestao = (ArrayList) hSession.createQuery("from Sugestao").list();
+        hSession.getTransaction().commit();
+        return listaSugestao;
+    }
+
     public ArrayList getListaUsuarios() {
         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
         hSession.beginTransaction();
@@ -120,29 +130,48 @@ public class Banco {
     }
 
     public ArrayList getListaTransacoes(Usuario u) {
-        ArrayList<Transacao> listaTransacoes = new ArrayList();
-        
-        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
-        hSession.beginTransaction();
-        ArrayList<Compra> listaCompras = (ArrayList) hSession.createQuery("from Compra as "
-                + "c where c.usuario=:id").setParameter("id", u.getId()).list();
-        hSession.getTransaction().commit();
-        
-        for(Compra c : listaCompras) {
-            Transacao t = new Transacao(c, c.getItens());
-            listaTransacoes.add(t);
-        }
-        
-        return listaTransacoes;
+        /*
+         ArrayList<Transacao> listaTransacoes = new ArrayList();
+
+         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+         hSession.beginTransaction();
+         ArrayList<Sugestao> listaCompras = (ArrayList) hSession.createQuery("from Compra as "
+         + "c where c.usuario=:id").setParameter("id", u.getId()).list();
+         hSession.getTransaction().commit();
+
+         for (Sugestao c : listaCompras) {
+         Transacao t = new Transacao(c, c.getItens());
+         listaTransacoes.add(t);
+         }
+
+         return listaTransacoes;
+         */
+        return null;
     }
 
     public ArrayList getListaAcai() {
         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
         hSession.beginTransaction();
         ArrayList<Acai> listaAcai = (ArrayList) hSession.createQuery("from Acai").list();
-        hSession.getTransaction().commit();        
+        hSession.getTransaction().commit();
         return listaAcai;
     }
+
+    public Acai getAcai(String descricao) {
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+        Acai acai = (Acai) hSession.createQuery("select * from Acai a where a.descricao = " + descricao).uniqueResult();
+        hSession.getTransaction().commit();
+        return acai;
+    }    
+    
+    public Componente getComponente(String descricao) {
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+        Componente c = (Componente) hSession.createQuery("select * from componente c where c.descricao = " + descricao).uniqueResult();
+        hSession.getTransaction().commit();
+        return c;
+    }      
     
     public Usuario getUsuario(String login) {
         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -182,11 +211,19 @@ public class Banco {
         q.executeUpdate();
         hSession.getTransaction().commit();
     }
-
-    public Compra getCompra(int id) {
+    
+    public void removeSugestao(int index) {
         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
         hSession.beginTransaction();
-        Compra c = (Compra) hSession.createQuery("from Compra as"
+        Query q = hSession.createQuery("delete from Sugestao as x where x.id=:id").setParameter("id", index);
+        q.executeUpdate();
+        hSession.getTransaction().commit();        
+    }
+
+    public Sugestao getCompra(int id) {
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+        Sugestao c = (Sugestao) hSession.createQuery("from Compra as"
                 + "c where c.id=:id").setParameter("id", id).uniqueResult();
         hSession.getTransaction().commit();
         return c;
@@ -232,27 +269,94 @@ public class Banco {
     }
 
     public void finalizarCompra(ArrayList<Produto> listaProdutos, Usuario u) {
+        /*
+         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+         hSession.beginTransaction();
+
+         Sugestao c = new Sugestao();
+         Set set = c.getItens();
+
+         for (Produto p : listaProdutos) {
+         Item i = new Item();
+         i.setDescricao(p.descricao());
+         i.setValor(p.custo());
+         set.add(i);
+         }
+         hSession.getTransaction().commit();
+
+
+         hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+         hSession.beginTransaction();
+
+         Set set2 = u.getCompras();
+         set2.add(c);
+
+         hSession.getTransaction().commit();
+         */
+    }
+
+    public Sugestao salvaSugestao(String nome, Produto p) {
+        Sugestao s = new Sugestao();
+
+        Double valor = 0.0;
+        String descricao = "";
+        String componentes = p.getComponentes();
+        for (int i = 1; i < componentes.length(); i++) {
+            int id = componentes.charAt(i) - '0';
+
+            Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+            hSession.beginTransaction();
+
+            Componente c = (Componente) hSession.createQuery("from Componente as "
+                    + "c where c.id=:id").setParameter("id", id).uniqueResult();
+            hSession.getTransaction().commit();
+
+            valor += c.getValor();
+            if ("".equals(descricao)) {
+                descricao = c.getDescricao();
+            } else {
+                descricao = c.getDescricao() + " + " + descricao;
+            }
+
+            /*
+             Item item = new Item();
+             System.out.println("Descricao " + c.getDescricao());
+             System.out.println("Nome " + c.getNome());
+             System.out.println("Valor " + c.getValor());
+             System.out.println("ID " + s.getId());
+            
+             item.setDescricao(c.getDescricao());
+             item.setNome(c.getNome());
+             item.setValor(c.getValor());
+             item.setSugestao_id(s.getId());
+
+             hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+             hSession.beginTransaction();
+             hSession.save(item);
+             hSession.getTransaction().commit();
+             */
+        }
+
+        int id = componentes.charAt(0) - '0';
+
         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
         hSession.beginTransaction();
-
-        Compra c = new Compra();
-        Set set = c.getItens();
-
-        for (Produto p : listaProdutos) {
-            Item i = new Item();
-            i.setDescricao(p.descricao());
-            i.setValor(p.custo());
-            set.add(i);
-        }
+        Acai c = (Acai) hSession.createQuery("from Acai as "
+                + "c where c.id=:id").setParameter("id", id).uniqueResult();
         hSession.getTransaction().commit();
 
+        valor += c.getValor();
+        descricao = c.getDescricao() + " + " + descricao;
+
+        s.setNome(nome);
+        s.setValor(valor);
+        s.setDescricao(descricao);
 
         hSession = HibernateUtil.getSessionFactory().getCurrentSession();
         hSession.beginTransaction();
-
-        Set set2 = u.getCompras();
-        set2.add(c);
-
+        hSession.save(s);
         hSession.getTransaction().commit();
+        return s;
     }
+
 }

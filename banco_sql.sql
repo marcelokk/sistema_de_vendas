@@ -1,8 +1,11 @@
 drop table Componente;
 drop table Usuario;
 drop table Acai;
-drop table compra;
+drop table sugestao;
+
+/*
 drop table item;
+*/
 
 create table Acai (
     id integer,
@@ -36,23 +39,31 @@ create table Usuario (
     PRIMARY KEY(id)
 );
 
-create table Compra(
+create table sugestao(
     id integer,
-    usuario integer,
-    data_da_compra text not null,
+    nome varchar,
+    descricao varchar,
+    valor real,
+    primary key(id)
+);
 
-    PRIMARY KEY(id),
-    FOREIGN KEY(usuario) REFERENCES Usuario(id)
+/*
+create table Sugestao(
+    id integer,
+    nome varchar,
+    PRIMARY KEY(id)
 );
 
 create table Item(
     id integer,
-    descricao text not null,
-    valor real not null,
+    sugestao_id integer,
+    nome varchar,
+    descricao varchar,
+    valor real,
     PRIMARY KEY(id),
-    FOREIGN KEY(id) REFERENCES Compra(id)
+    FOREIGN KEY(sugestao_id) REFERENCES Sugestao(id)
 );
-
+*/
 insert into Acai values(0, "morango", 100, 7.5, "acai sabor morango");
 insert into Acai values(1, "banana", 100, 7.5, "acai sabor banana");
 insert into Acai values(2, "natural", 100, 7.0, "acai puro");

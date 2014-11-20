@@ -1,7 +1,6 @@
 package control;
 
 /*
- * consertar o componente zero e o quartro que esta na lista da home
  * colocar o iterator
  * fazer a sugestao do dia
  */
@@ -232,12 +231,20 @@ public class Servlet extends HttpServlet {
         } // administrador cadastra uma sugestao 
         else if (acao.equals("sugestao")) {
             state.setRequest(request);
-            //state.cadastrarSugestao();
+            state.cadastrarSugestao();
             url = state.url();
         } // usuario clica para finalizar a sua compra 
         else if (acao.equals("compra_finalizada")) {
             state.setRequest(request);
             state.finalizarCompra();
+            url = state.url();
+        } else if(acao.equals("add_sugestao")) {
+            state.setRequest(request);
+            state.addSugestao();
+            url = state.url();
+        } else if(acao.equals("remover_sugestao")) {
+            state.setRequest(request);
+            state.removerSugestao();
             url = state.url();
         }
         if (!"".equals(url)) {

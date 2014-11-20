@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-  <class name="model.Compra" table="Compra">
+  <class name="model.Sugestao" table="Sugestao">
     <id column="id" name="id">
       <generator class="increment"/>
     </id>
-    <property column="usuario" name="usuario"/>
-    <property column="data_da_compra" name="data_da_compra"/>
+    <property column="nome" name="nome"/>
+    <property column="descricao" name="descricao"/>
+    <property column="valor" name="valor"/>
     
-    <set name="itens" lazy="false">
-      <key column="id" />
+    <!--
+    <set lazy="false" name="itens">
+      <key column="id"/>
       <one-to-many class="model.Item"/>
     </set>
-    
+    -->
   </class>
 </hibernate-mapping>

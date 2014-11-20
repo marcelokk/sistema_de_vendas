@@ -6,7 +6,7 @@ import control.Servlet;
 import decorator.Produto;
 import java.util.ArrayList;
 import java.util.Set;
-import model.Compra;
+import model.Sugestao;
 import model.Item;
 import model.Usuario;
 import singleton.Banco;
@@ -121,5 +121,20 @@ public class Carrinho implements State {
     @Override
     public void carrinho() {
         throw new UnsupportedOperationException("Not supported yet.");        
+    }
+
+    @Override
+    public void cadastrarSugestao() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void removerSugestao() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void addSugestao() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

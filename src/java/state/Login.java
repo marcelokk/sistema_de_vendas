@@ -7,6 +7,7 @@ import decorator.Produto;
 import java.util.ArrayList;
 import model.Acai;
 import model.Componente;
+import model.Sugestao;
 import model.Usuario;
 import singleton.Banco;
 
@@ -36,25 +37,24 @@ public class Login implements State {
 
             // ----- recupera a lista de produtos do banco de dados -----
             ArrayList<Componente> listaProdutos = Banco.getInstantance().getListaComponentes();
-
-            for (int i = 0; i < listaProdutos.size(); i++) {
-                System.out.println("status " + listaProdutos.get(i).getStatus());
-
-                System.out.println("valor " + listaProdutos.get(i).getValor());
-            }
-
+            ArrayList<Sugestao> listaSugestoes = Banco.getInstantance().getListaSugestao();
             ArrayList<Acai> listaAcai = Banco.getInstantance().getListaAcai();
+            
+            System.out.println("lista sugestao tem " + listaSugestoes.size());
+            for(Sugestao s : listaSugestoes) {
+                System.out.println(s.getDescricao());
+            }
             
             // ----- salva na sessao -----
             session.setAttribute("produtos", listaProdutos);
             session.setAttribute("lista_acai", listaAcai);
-
+            session.setAttribute("lista_sugestoes", listaSugestoes);
+            
             ArrayList<Produto> lista = new ArrayList();
             session.setAttribute("listaCompras", lista);
 
             servlet.setState(servlet.getHomeState());
         }
-        System.out.println("Login - logar url: " + url);
     }
 
     @Override
@@ -133,6 +133,21 @@ public class Login implements State {
 
     @Override
     public void carrinho() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void cadastrarSugestao() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void removerSugestao() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void addSugestao() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

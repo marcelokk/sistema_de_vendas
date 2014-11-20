@@ -7,5 +7,7 @@
     </id>
     <property column="descricao" name="descricao"/>
     <property column="valor" name="valor"/>    
+    <property column="nome" name="nome"/>    
+    <property column="sugestao_id" name="sugestao_id"/>    
   </class>
 </hibernate-mapping>

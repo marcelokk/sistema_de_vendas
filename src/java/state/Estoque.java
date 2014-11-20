@@ -95,4 +95,19 @@ public class Estoque implements State {
     public void carrinho() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public void cadastrarSugestao() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void removerSugestao() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void addSugestao() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

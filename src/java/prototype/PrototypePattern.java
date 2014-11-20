@@ -2,12 +2,12 @@ package prototype;
 
 import decorator.Produto;
 
-public abstract class SugestaoPrototype {
+public abstract class PrototypePattern {
 
     protected Produto produto;
 
-    public abstract SugestaoPrototype clonar();
-
+    public abstract PrototypePattern clonar();
+    
     public Produto getProduto() {
         return produto;
     }

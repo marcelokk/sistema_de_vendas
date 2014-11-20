@@ -12,6 +12,7 @@
         <jsp:useBean id="currentUser" type="model.Usuario" scope="session"/>
         <jsp:useBean id="produtos" type="java.util.List" scope="session"/>
         <jsp:useBean id="lista_acai" type="java.util.List" scope="session"/>
+        <jsp:useBean id="lista_sugestoes" type="java.util.List" scope="session"/>
 
     <center>
         <header id="top">
@@ -40,7 +41,9 @@
         </c:if>        
 
         <c:if test="${currentUser.administrador == 1}">
-            <form method="POST" action="Servlet?acao=sugestao">             
+            <form method="POST" action="Servlet?acao=sugestao">    
+
+                <p>Nome da Sugestao</p><input type="text" name="nome">
             </c:if>
 
             <c:if test="${currentUser.administrador == 0}">
@@ -84,6 +87,7 @@
                                 <c:if test="${currentUser.administrador == 1}">
                                     <td>${p.quantidade}</td>                           
                                 </c:if>
+
                                 <td>${p.valor}</td>
                                 <c:if test="${currentUser.administrador == 1}">
                                     <td>${p.status}</td>
@@ -110,6 +114,36 @@
                     <input type="submit" value="Adicionar no Carrinho" name="submit">                
                 </c:if>
             </form>
+
+            <h3>Lista de Sugestoes</h3>
+
+
+            <table style="border-style: solid">
+                <tr>
+                    <th>Nome</th>
+                    <th>Descricao</th>
+                    <th>Valor</th>
+                    <th></th>
+                </tr>
+                <c:forEach items="${lista_sugestoes}" var="s" varStatus="i">
+                    <tr>
+                        <td>${s.nome}</td>
+                        <td>${s.descricao}</td>
+                        <td>${s.valor}</td>
+                        <c:if test="${currentUser.administrador == 1}">
+                        <form method="POST" action="Servlet?acao=remover_sugestao&id=${s.id}"> 
+                            <td><input type="submit" value="remover" name="submit"> </td>
+                        </form>
+                    </c:if>
+
+                    <c:if test="${currentUser.administrador == 0}">
+                        <form method="POST" action="Servlet?acao=add_sugestao&id=${s.id}">  
+                            <td><input type="submit" value="adicionar" name="submit"> </td>
+                        </form>
+                    </c:if>                                
+                    </tr>                            
+                </c:forEach>                        
+            </table>                 
     </center>    
 </body>
 </html>

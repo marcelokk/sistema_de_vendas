@@ -27,4 +27,9 @@ public interface State {
     public String url();
     
     public void voltar();
+    
+    public void cadastrarSugestao();
+    
+    public void removerSugestao();
+    public void addSugestao();
 }
