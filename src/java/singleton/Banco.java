@@ -160,7 +160,17 @@ public class Banco {
     public Acai getAcai(String descricao) {
         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
         hSession.beginTransaction();
-        Acai acai = (Acai) hSession.createQuery("select * from Acai a where a.descricao = " + descricao).uniqueResult();
+        System.out.println("from Acai a where a.descricao = \'" + descricao.trim() + "\'");
+        Acai acai = (Acai) hSession.createQuery("from Acai a where a.descricao = \'" + descricao.trim() + "\'").uniqueResult();
+        hSession.getTransaction().commit();
+        return acai;
+    }    
+    
+    public Acai getAcai(int id) {
+        Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
+        hSession.beginTransaction();
+        System.out.println("from Acai a where a.id = " + id);        
+        Acai acai = (Acai) hSession.createQuery("from Acai a where a.id = " + id).uniqueResult();
         hSession.getTransaction().commit();
         return acai;
     }    
@@ -168,7 +178,8 @@ public class Banco {
     public Componente getComponente(String descricao) {
         Session hSession = HibernateUtil.getSessionFactory().getCurrentSession();
         hSession.beginTransaction();
-        Componente c = (Componente) hSession.createQuery("select * from componente c where c.descricao = " + descricao).uniqueResult();
+        System.out.println("from Componente c where c.descricao = \'" + descricao.trim() + "\'");
+        Componente c = (Componente) hSession.createQuery("from Componente c where c.descricao = \'" + descricao.trim() + "\'").uniqueResult();
         hSession.getTransaction().commit();
         return c;
     }      

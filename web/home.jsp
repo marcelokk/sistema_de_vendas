@@ -6,6 +6,66 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home</title>
+
+        <script>
+            function Popup(msg) {
+                var body = document.getElementsByTagName("body")[0];
+                var div = document.createElement("div");
+                var input = document.createElement("input");
+
+                div.style.position = "absolute";
+                div.style.top = "50%";
+                div.style.left = "50%";
+                div.style.width = "300px";
+                div.style.height = "60px";
+                div.style.margin = "-50px 0 0 -170px";
+                div.style.border = "3px double #999999";
+                div.style.padding = "20px";
+                div.style.opacity = "0.85";
+                div.style.backgroundColor = "#FFFFFF";
+                div.style.fontSize = "20px";
+                div.style.lineHeight = "20px";
+                div.style.textAlign = "right";
+
+                body.appendChild(div);
+
+                input.style.position = "absolute";
+                input.style.top = "50%";
+                input.style.left = "50%";
+                input.style.width = "300px";
+                input.style.margin = "-30px 0 0 -150px";
+                input.style.border = "1px none #CCCCCC";
+                input.style.backgroundColor = "#FFFFFF";
+                input.style.fontSize = "20px";
+                input.style.fontFamily = "Arial, Helvetica, sans-serif";
+                input.style.color = "#000000";
+                input.style.textAlign = "left";
+
+                input.readOnly = true;
+                input.value = msg;
+                input = div.appendChild(input);
+
+                input.onblur = function(e) {
+                    opacityDown(this.parentNode);
+                }
+                input.focus();
+            };
+
+            function opacityDown(theElement) {
+                var opacity = parseFloat(theElement.style.opacity);
+
+                if (opacity < 0.08) {
+                    theElement.parentNode.removeChild(theElement);
+                }
+                else {
+                    opacity -= 0.07;
+                    theElement.style.opacity = opacity;
+                    setTimeout(function(){opacityDown(theElement);}, 50);
+                }
+                return true;
+            };
+        </script>
+
     </head>
 
     <body>
@@ -121,14 +181,14 @@
             <table style="border-style: solid">
                 <tr>
                     <th>Nome</th>
-                    <th>Descricao</th>
+                    <th>Detalhes</th>
                     <th>Valor</th>
                     <th></th>
                 </tr>
                 <c:forEach items="${lista_sugestoes}" var="s" varStatus="i">
                     <tr>
                         <td>${s.nome}</td>
-                        <td>${s.descricao}</td>
+                        <td><a onClick="Popup('${s.descricao}')" href="#">detalhes</a></td>
                         <td>${s.valor}</td>
                         <c:if test="${currentUser.administrador == 1}">
                         <form method="POST" action="Servlet?acao=remover_sugestao&id=${s.id}"> 
